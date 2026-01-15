@@ -3,7 +3,7 @@ title: "Implement Highlights Listing Page (/destaques)"
 created: 2026-01-15T17:35:00-03:00
 last_updated: 2026-01-15T17:45:00-03:00
 priority: P2-M
-status: in-progress
+status: completed
 tags: [feature, page, astro, highlights]
 ---
 
@@ -20,11 +20,11 @@ Create the `/destaques` page listing highlights from Collection ID 7.
 - Pagination: Yes.
 
 ## Tasks
-- [ ] Create `src/pages/destaques/[...page].astro`.
-- [ ] Fetch items from Collection 7.
-- [ ] Implement UI (3 cols, 4:5 ratio).
-- [ ] Implement item count logic (check for array/repeater length).
+- [x] Create `src/pages/destaques/[...page].astro`.
+- [x] Fetch items from Collection 7.
+- [x] Implement UI (3 cols, 4:5 ratio).
+- [x] Implement item count logic (check for array/repeater length).
 
 ## Verification
-- [ ] Verify route /destaques.
-- [ ] Verify 3-column layout.
+- [x] Verify route /destaques.
+- [x] Verify 3-column layout.

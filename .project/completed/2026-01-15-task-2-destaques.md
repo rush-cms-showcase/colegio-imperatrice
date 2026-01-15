@@ -3,7 +3,7 @@ title: "Implement Blog Listing Page (/blog)"
 created: 2026-01-15T17:35:00-03:00
 last_updated: 2026-01-15T17:50:00-03:00
 priority: P2-M
-status: in-progress
+status: completed
 tags: [feature, page, astro, blog]
 ---
 
@@ -17,10 +17,10 @@ Create the `/blog` page listing items from Collection ID 4.
 - Pagination: Yes.
 
 ## Tasks
-- [ ] Create `src/pages/blog/[...page].astro`.
-- [ ] Fetch items from Collection 4.
-- [ ] Implement Light Theme blog layout (Grid/List).
+- [x] Create `src/pages/blog/[...page].astro`.
+- [x] Fetch items from Collection 4.
+- [x] Implement Light Theme blog layout (Grid/List).
 
 ## Verification
-- [ ] Verify route /blog.
-- [ ] Verify light theme aesthetics.
+- [x] Verify route /blog.
+- [x] Verify light theme aesthetics.

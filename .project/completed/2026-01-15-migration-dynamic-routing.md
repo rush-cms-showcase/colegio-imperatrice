@@ -5,7 +5,7 @@ last_updated: 2026-01-15T13:56:00-03:00
 priority: P1-M
 estimated_hours: 8
 actual_hours: 0
-status: in-progress
+status: completed
 blockers: []
 tags: [astro, migration, routing]
 ---

@@ -3,7 +3,7 @@ title: "Implement Blog Single Page (/blog/{slug})"
 created: 2026-01-15T17:35:00-03:00
 last_updated: 2026-01-15T18:05:00-03:00
 priority: P2-M
-status: in-progress
+status: completed
 tags: [feature, page, astro, blog]
 ---
 
@@ -15,9 +15,9 @@ Create the single blog post layout.
 - Layout: Standard blog post layout (Light Theme).
 
 ## Tasks
-- [ ] Create `src/pages/blog/[slug].astro`.
-- [ ] Fetch item by slug (Collection 4).
-- [ ] Implement layout (Title, Date, Content, Excerpt).
+- [x] Create `src/pages/blog/[slug].astro`.
+- [x] Fetch item by slug (Collection 4).
+- [x] Implement layout (Title, Date, Content, Excerpt).
 
 ## Verification
-- [ ] Verify route /blog/[slug].
+- [x] Verify route /blog/[slug].

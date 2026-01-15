@@ -5,7 +5,7 @@ last_updated: 2026-01-15T15:00:00-03:00
 priority: P1-M
 estimated_hours: 4
 actual_hours: 0
-status: in-progress
+status: completed
 blockers: []
 tags: [frontend, layout, migration, astro]
 ---

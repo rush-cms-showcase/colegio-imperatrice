@@ -5,7 +5,7 @@ last_updated: 2026-01-15T15:00:00-03:00
 priority: P2-S
 estimated_hours: 1
 actual_hours: 0
-status: in-progress
+status: completed
 blockers: []
 tags: [refactor, standards]
 ---

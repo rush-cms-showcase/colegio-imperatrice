@@ -5,7 +5,7 @@ last_updated: 2026-01-15T15:15:00-03:00
 priority: P1-M
 estimated_hours: 2
 actual_hours: 0
-status: in-progress
+status: completed
 blockers: []
 tags: [frontend, styling, layout]
 ---
@@ -23,4 +23,4 @@ Align the visual layout with the original site design, specifically fixing the H
 - [x] Add `TopBar` to `src/layouts/layout.astro` <!-- id: 3 -->
 
 ## Verification
-- [ ] Visual check of TopBar and Header <!-- id: 4 -->
+- [x] Visual check of TopBar and Header <!-- id: 4 -->
