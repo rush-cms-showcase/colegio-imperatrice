@@ -1,0 +1,74 @@
+---
+import 'photoswipe/style.css';
+
+interface Image {
+  id: number;
+  url: string;
+  name: string;
+  width?: number;
+  height?: number;
+}
+
+interface Props {
+  images: Image[];
+  galleryID: string;
+}
+
+const { images, galleryID } = Astro.props;
+---
+
+<div class="pswp-gallery" id={galleryID}>
+  {/* Masonry Layout using CSS Columns */}
+  <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+    {images.map((image, index) => {
+       // Fallback dimensions if API doesn't provide them, although specific dims are better for PhotoSwipe
+       const width = image.width || 1200; 
+       const height = image.height || 800;
+       
+       return (
+        <a
+          href={image.url}
+          data-pswp-width={width}
+          data-pswp-height={height}
+          target="_blank"
+          rel="noreferrer"
+          class="block break-inside-avoid relative group overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-shadow"
+        >
+          <img
+            src={image.url}
+            alt={image.name}
+            class="w-full h-auto object-cover transform transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
+        </a>
+      );
+    })}
+  </div>
+</div>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+
+  // Initialize all galleries found on the page
+  const initLightbox = () => {
+      const galleries = document.querySelectorAll('.pswp-gallery');
+      galleries.forEach((gallery) => {
+          // Check if already initialized to avoid duplicates if view transitions used
+          if ((gallery as any)._pswpInit) return;
+          
+          const lightbox = new PhotoSwipeLightbox({
+            gallery: '#' + gallery.id,
+            children: 'a',
+            pswpModule: () => import('photoswipe')
+          });
+          lightbox.init();
+          (gallery as any)._pswpInit = true;
+      });
+  };
+
+  initLightbox();
+  
+  // Support View Transitions if enabled later
+  document.addEventListener('astro:page-load', initLightbox);
+</script>
