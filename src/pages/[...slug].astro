@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../layouts/layout.astro';
 import { rushConfig } from "../../rush.config";
 import { rush } from "@/lib/rush";
 
@@ -48,14 +48,14 @@ export async function getStaticPaths() {
     return paths;
 }
 
-import MasonryGallery from '@/components/gallery/MasonryGallery';
+import MasonryGallery from '@/components/gallery/masonry-gallery.astro';
 
 // ... (existing helper logic)
 
 const { type, item, collectionId, title } = Astro.props;
 const isEvent = String(collectionId) === '6'; // Events Collection ID
 
-let archiveItems = [];
+let archiveItems: any[] = [];
 if (type === 'archive') {
 // ...
 }
@@ -94,7 +94,6 @@ if (type === 'archive') {
                     <div class="mt-12 not-prose">
                         <h2 class="text-2xl font-bold mb-6">Galeria de Fotos</h2>
                         <MasonryGallery 
-                            client:visible 
                             images={item.images} 
                             galleryID={`gallery-${item.id}`} 
                         />

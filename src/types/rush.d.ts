@@ -1,12 +1,25 @@
-export type LocaleCode = string
+export interface NavItem {
+  title: string
+  url: string
+  target?: string
+  children?: NavItem[]
+}
 
 export interface NavConfig {
+  main?: string
+  topbar?: string
+  footer?: string
   [key: string]: string | undefined
 }
+
 
 export interface TaxonomyPaths {
   categories: string
   tags: string
+}
+
+export interface FormsConfig {
+  [key: string]: string
 }
 
 export interface LocaleConfig {
@@ -14,13 +27,15 @@ export interface LocaleConfig {
   label: string
   path: string
   navs?: NavConfig
+  forms?: FormsConfig
   taxonomies: TaxonomyPaths
   pagination: string
 }
 
 export interface RushSiteConfig {
-  defaultLocale: string
+  url?: string
   locales: Record<string, LocaleConfig>
+  defaultLocale: string
   /**
    * Routes configuration
    * mapping path -> collection ID
