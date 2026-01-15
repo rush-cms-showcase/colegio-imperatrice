@@ -48,19 +48,16 @@ export async function getStaticPaths() {
     return paths;
 }
 
+import MasonryGallery from '@/components/gallery/MasonryGallery';
+
+// ... (existing helper logic)
+
 const { type, item, collectionId, title } = Astro.props;
+const isEvent = String(collectionId) === '6'; // Events Collection ID
 
 let archiveItems = [];
 if (type === 'archive') {
-    const entriesKey = Array.isArray(collectionId) ? collectionId[0] : collectionId;
-    try {
-        // @ts-ignore
-        const res = await rush.getEntries(entriesKey, { limit: 20 });
-        // @ts-ignore
-        archiveItems = res.data || [];
-    } catch (e) {
-        console.error("Failed to load archive items", e);
-    }
+// ...
 }
 ---
 
@@ -83,14 +80,26 @@ if (type === 'archive') {
         {type === 'entry' && item && (
             <article class="prose lg:prose-xl bg-white p-8 rounded-lg shadow-sm">
                  <h1 class="text-4xl font-bold mb-4">{item.title}</h1>
-                 {item.featured_image && (
+                 {item.featured_image && !isEvent && (
                      <img 
                         src={item.featured_image.url} 
                         alt={item.featured_image.name} 
                         class="w-full h-96 object-cover rounded-lg mb-8 shadow-lg"
                     />
                  )}
+                 
                  <div class="prose max-w-none" set:html={item.content}></div>
+
+                 {isEvent && item.images && (
+                    <div class="mt-12 not-prose">
+                        <h2 class="text-2xl font-bold mb-6">Galeria de Fotos</h2>
+                        <MasonryGallery 
+                            client:visible 
+                            images={item.images} 
+                            galleryID={`gallery-${item.id}`} 
+                        />
+                    </div>
+                 )}
             </article>
         )}
     </div>
