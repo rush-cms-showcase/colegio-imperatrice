@@ -1,0 +1,81 @@
+---
+import Brand from '@/components/layout/brand.astro';
+import MenuList from '@/components/navigation/menu-list.astro';
+import Menu from '~icons/lucide/menu';
+import Close from '~icons/lucide/x';
+import type { NavItem } from '@/types/rush';
+
+interface Props {
+  siteName: string;
+  items: NavItem[];
+  pathname: string;
+}
+
+const { siteName, items, pathname } = Astro.props;
+---
+
+<header id="site-header" class="sticky top-0 z-40 transition-all duration-300 border-b border-transparent bg-[#009640] shadow-md py-4">
+    <nav class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-20">
+            <Brand siteName={siteName} />
+            
+            {/* Desktop Menu */}
+            <div class="hidden lg:block">
+                <MenuList items={items} />
+            </div>
+
+            {/* Mobile Menu Toggle */}
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors z-50 relative" aria-label="Abrir menu">
+                 <div id="icon-menu">
+                    <Menu width="28" height="28" />
+                 </div>
+                 <div id="icon-close" class="hidden">
+                    <Close width="28" height="28" />
+                 </div>
+            </button>
+        </div>
+    </nav>
+    
+    {/* Mobile Menu Overlay */}
+    <div id="mobile-menu" class="hidden fixed inset-0 z-30 bg-[#009640] pt-28 px-4 lg:hidden overflow-y-auto">
+        <MenuList items={items} class="flex-col !gap-6 text-xl" />
+    </div>
+</header>
+
+<script>
+    const header = document.getElementById('site-header');
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const iconMenu = document.getElementById('icon-menu');
+    const iconClose = document.getElementById('icon-close');
+    let isOpen = false;
+
+    // Sticky Scroll Logic
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            header?.classList.add('py-2');
+            header?.classList.remove('py-4');
+        } else {
+            header?.classList.add('py-4');
+            header?.classList.remove('py-2');
+        }
+    });
+
+    // Mobile Menu Toggle
+    btn?.addEventListener('click', () => {
+        isOpen = !isOpen;
+        if (isOpen) {
+            menu?.classList.remove('hidden');
+            iconMenu?.classList.add('hidden');
+            iconClose?.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Lock scroll
+            btn.setAttribute('aria-label', 'Fechar menu');
+        } else {
+            menu?.classList.add('hidden');
+            iconMenu?.classList.remove('hidden');
+            iconClose?.classList.add('hidden');
+            document.body.style.overflow = ''; // Unlock scroll
+            btn.setAttribute('aria-label', 'Abrir menu');
+        }
+    });
+</script>

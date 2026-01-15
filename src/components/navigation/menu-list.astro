@@ -1,0 +1,118 @@
+---
+import type { NavItem } from '@/types/rush';
+import Chevron from '~icons/lucide/chevron-down';
+
+interface Props {
+  items: NavItem[];
+  class?: string;
+}
+
+const { items, class: className } = Astro.props;
+---
+
+<ul class:list={["menu-list flex gap-4 lg:gap-8", className]}>
+  {items.map((item) => {
+    const hasChildren = item.children && item.children.length > 0;
+    
+    return (
+    <li class="relative group menu-item">
+      {hasChildren ? (
+        <button
+          type="button"
+          class="menu-toggle text-white font-medium hover:text-white/80 transition-colors flex items-center gap-1 uppercase text-sm tracking-wide cursor-pointer"
+          aria-expanded="false"
+        >
+          {item.title}
+          <div class="transition-transform duration-200 chevron">
+             <Chevron width="14" height="14" />
+          </div>
+        </button>
+      ) : (
+        <a 
+          href={item.url} 
+          target={item.target}
+          class="text-white font-medium hover:text-white/80 transition-colors flex items-center gap-1 uppercase text-sm tracking-wide"
+        >
+          {item.title}
+        </a>
+      )}
+      
+      {hasChildren && (
+        <ul class="dropdown-menu hidden lg:absolute lg:top-full lg:left-0 lg:bg-[#009640] lg:shadow-lg lg:min-w-[200px] lg:p-2 lg:rounded-md lg:mt-2 z-50 flex-col ml-4 lg:ml-0 border-l lg:border-none border-white/20 pl-4 lg:pl-0 mt-2 lg:mt-0">
+          {item.children!.map((child) => (
+            <li>
+                <a 
+                    href={child.url} 
+                    target={child.target}
+                    class="block text-white py-2 px-4 hover:bg-white/10 rounded-sm text-sm"
+                >
+                    {child.title}
+                </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+  )})}
+</ul>
+
+<script>
+  // Handle Click Toggles
+  const toggles = document.querySelectorAll('.menu-toggle');
+  
+  toggles.forEach(toggle => {
+      toggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const btn = e.currentTarget as HTMLButtonElement;
+          const parent = btn.closest('.menu-item');
+          const dropdown = parent?.querySelector('.dropdown-menu');
+          const chevron = btn.querySelector('.chevron');
+          
+          if (!dropdown) return;
+
+          const match = dropdown.classList.contains('hidden');
+
+          // Close all others first (optional, but good UX for desktop menus)
+          // For mobile nested menus, maybe keep them open? 
+          // Let's close others at the same level for consistency.
+          const list = btn.closest('.menu-list');
+          list?.querySelectorAll('.dropdown-menu').forEach(d => {
+              if (d !== dropdown) d.classList.add('hidden');
+          });
+          list?.querySelectorAll('.menu-toggle').forEach(t => {
+             if (t !== btn) {
+                 t.setAttribute('aria-expanded', 'false');
+                 t.querySelector('.chevron')?.classList.remove('rotate-180');
+             }
+          });
+
+          // Toggle current
+          if (match) {
+              dropdown.classList.remove('hidden');
+              dropdown.classList.add('flex'); // dropdown is flex-col
+              btn.setAttribute('aria-expanded', 'true');
+              chevron?.classList.add('rotate-180');
+          } else {
+              dropdown.classList.add('hidden');
+              dropdown.classList.remove('flex');
+              btn.setAttribute('aria-expanded', 'false');
+              chevron?.classList.remove('rotate-180');
+          }
+      });
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('.menu-item')) {
+          document.querySelectorAll('.dropdown-menu').forEach(d => {
+              d.classList.add('hidden');
+              d.classList.remove('flex');
+          });
+          document.querySelectorAll('.menu-toggle').forEach(t => {
+              t.setAttribute('aria-expanded', 'false');
+              t.querySelector('.chevron')?.classList.remove('rotate-180');
+          });
+      }
+  });
+</script>

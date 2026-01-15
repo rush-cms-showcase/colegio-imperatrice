@@ -1,0 +1,32 @@
+
+---
+import { rushConfig } from '../../../rush.config';
+
+const siteName = "Colégio Imperatrice"; // Could come from rushConfig or props
+---
+
+<footer class="bg-green-950 text-white">
+    <div class="text-center flex items-center flex-col px-4 py-16 justify-center">
+        <img src="/imperatrice-logo.png" alt="Colégio Imperatrice" width="100" height="100" class="mb-4 rounded-lg shadow-lg" />
+        <h3 class="text-yellow-500 text-xl lg:text-2xl font-bold mb-2 lg:mb-4">Colégio Imperatrice</h3>
+        <p>Rua Ilha Bela, 67 - Sumaré, Caraguatatuba - SP, CEP 11661-310</p>
+        <p>Tel: <a href="tel:1238839678" class="hover:underline text-yellow-500">(12) 3883-9678</a></p>
+        <p>E-mail: <a href="mailto:contato@colegioimperatrice.com.br" class="hover:underline text-yellow-500">contato@colegioimperatrice.com.br</a></p>
+        <p>Para Sugestões, elogios e reclamações: <a href="mailto:sac@colegioimperatrice.com.br" class="hover:underline text-yellow-500">sac@colegioimperatrice.com.br</a></p>
+    </div>
+    <div class="flex items-center flex-col lg:flex-row lg:justify-between gap-4 p-4 lg:p-6 border-t border-green-900">
+        <p class="text-sm max-lg:text-center sm:text-base text-gray-400">
+            © {new Date().getFullYear()} {siteName}. Todos os direitos reservados.
+        </p>
+        <p class="flex items-center justify-end flex-row gap-2 text-xs sm:text-sm text-gray-500">
+            <span>Feito por</span>
+            <a href="https://rafhael.com.br" target="_blank">
+                <img src="/rafhael-marsigli.svg" alt="Rafhael Marsigli" class="w-8 h-8 rounded-md shadow-md" />
+            </a>
+            <span>Powered by</span>
+            <a href="https://rushcms.com" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 transition-colors">
+                <img src="/rush-cms.svg" alt="Rush CMS" class="w-8 h-8 rounded-md shadow-md" />
+            </a>
+        </p>
+    </div>
+</footer>

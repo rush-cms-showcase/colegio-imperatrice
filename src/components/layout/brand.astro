@@ -1,0 +1,22 @@
+---
+interface Props {
+    siteName: string;
+}
+
+const { siteName } = Astro.props;
+---
+
+<a href='/' class='flex items-center gap-3 group relative z-20'>
+    <div class='w-24 h-24 bg-white rounded-full font-bold overflow-hidden shadow-lg group-hover:scale-105 transition-transform flex items-center justify-center text-primary'>
+        <img
+            src='/imperatrice-logo.png'
+            alt='Logo'
+            width="512"
+            height="512"
+            class='object-contain w-full h-full'
+        />
+    </div>
+    <span class='text-white font-bold text-xl tracking-wide max-xl:hidden'>
+        {siteName}
+    </span>
+</a>
