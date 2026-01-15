@@ -1,0 +1,75 @@
+---
+import Layout from '@/layouts/layout.astro';
+import { rush } from "@/lib/rush";
+import { rushConfig } from "../../../rush.config";
+
+export async function getStaticPaths({ paginate }) {
+    const collectionId = rushConfig.routes['/destaques'];
+    // @ts-ignore
+    const response = await rush.getEntries(collectionId, { limit: 1000 });
+    // @ts-ignore
+    const items = response.data || [];
+
+    return paginate(items, { pageSize: rushConfig.defaults.perPage || 12 });
+}
+
+const { page } = Astro.props;
+---
+
+<Layout title="Destaques">
+    <div class="container mx-auto px-4 py-8 md:py-12">
+        <h1 class="text-3xl md:text-4xl font-bold text-[#009640] mb-8 uppercase tracking-wide">Destaques</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {page.data.map((item) => {
+                // Logic to count "participations" or related items. 
+                // Adjust field name 'participacoes' based on real data if needed.
+                const count = Array.isArray(item.participacoes) ? item.participacoes.length : 0;
+                
+                return (
+                    <a href={`/destaques/${item.slug}`} class="group relative w-full aspect-[4/5] block overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
+                        {/* Background Image */}
+                        {item.featured_image && (
+                            <div 
+                                class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                                style={`background-image: url('${item.featured_image.url}')`}
+                            />
+                        )}
+                        
+                        {/* Gradient Overlay */}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-90" />
+
+                        {/* Content */}
+                        <div class="absolute bottom-0 left-0 w-full p-6 flex flex-col justify-end h-full">
+                            <h2 class="text-white font-bold text-xl md:text-2xl leading-tight mb-2 group-hover:text-[#009640] transition-colors">
+                                {item.title}
+                            </h2>
+                            <span class="text-white/80 text-sm font-medium uppercase tracking-wider">
+                                {count} {count === 1 ? 'Participação' : 'Participações'} em destaques
+                            </span>
+                        </div>
+                    </a>
+                )
+            })}
+        </div>
+
+        {/* Pagination */}
+        {page.lastPage > 1 && (
+            <div class="flex justify-center mt-12 gap-2">
+                {page.url.prev && (
+                    <a href={page.url.prev} class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded hover:bg-[#009640] hover:text-white transition-colors">
+                        Anterior
+                    </a>
+                )}
+                <span class="px-4 py-2 text-gray-500">
+                    Página {page.currentPage} de {page.lastPage}
+                </span>
+                {page.url.next && (
+                    <a href={page.url.next} class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded hover:bg-[#009640] hover:text-white transition-colors">
+                        Próxima
+                    </a>
+                )}
+            </div>
+        )}
+    </div>
+</Layout>
