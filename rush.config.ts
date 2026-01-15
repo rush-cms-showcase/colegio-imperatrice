@@ -10,12 +10,12 @@ export const rushConfig: RushSiteConfig = {
 			label: 'Português',
 			path: '/',
 			navs: {
-				main: 'GhxYxmeyo8IIeXXipeXbWn1A',
-				topbar: 'gYy6bmulXnmKhCX3hbBMcehc',
-				footer: 'GhxYxmeyo8IIeXXipeXbWn1A',
+				main: import.meta.env.PUBLIC_RUSH_NAV_MAIN_ID,
+				topbar: import.meta.env.PUBLIC_RUSH_NAV_TOPBAR_ID,
+				footer: import.meta.env.PUBLIC_RUSH_NAV_FOOTER_ID,
 			},
 			forms: {
-				contact: 'pVcDlmNCiFe2bQTxHisx2uK3',
+				contact: import.meta.env.PUBLIC_RUSH_FORM_CONTACT_ID,
 			},
 			taxonomies: {
 				categories: 'categorias',
@@ -26,10 +26,10 @@ export const rushConfig: RushSiteConfig = {
     },
 
     routes: {
-        '/': 5,
-        '/eventos': 6,
-        '/blog': 4,
-        '/destaques': 7,
+        '/': Number(import.meta.env.PUBLIC_RUSH_ROUTE_ROOT_ID),
+        '/eventos': Number(import.meta.env.PUBLIC_RUSH_ROUTE_EVENTS_ID),
+        '/blog': Number(import.meta.env.PUBLIC_RUSH_ROUTE_BLOG_ID),
+        '/destaques': Number(import.meta.env.PUBLIC_RUSH_ROUTE_HIGHLIGHTS_ID),
     },
 
     defaults: {
