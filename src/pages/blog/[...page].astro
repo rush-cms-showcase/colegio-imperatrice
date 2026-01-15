@@ -1,0 +1,91 @@
+---
+import Layout from '@/layouts/layout.astro';
+import { rush } from "@/lib/rush";
+import { rushConfig } from "../../../rush.config";
+
+export async function getStaticPaths({ paginate }) {
+    const collectionId = rushConfig.routes['/blog'];
+    // @ts-ignore
+    const response = await rush.getEntries(collectionId, { limit: 1000 });
+    // @ts-ignore
+    const items = response.data || [];
+
+    return paginate(items, { pageSize: rushConfig.defaults.perPage || 12 });
+}
+
+const { page } = Astro.props;
+---
+
+<Layout title="Blog">
+    <div class="container mx-auto px-4 py-8 md:py-16">
+        <div class="max-w-4xl mx-auto text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-bold text-[#009640] mb-4 uppercase tracking-tight">Blog</h1>
+            <p class="text-gray-600 text-lg">Acompanhe nossas notícias e novidades.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {page.data.map((item) => (
+                <article class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-100 overflow-hidden flex flex-col h-full">
+                    <a href={`/blog/${item.slug}`} class="block aspect-video overflow-hidden">
+                        {item.featured_image ? (
+                            <img 
+                                src={item.featured_image.url} 
+                                alt={item.featured_image.alt || item.title} 
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                            />
+                        ) : (
+                            <div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400">
+                                <span class="text-4xl opacity-20">IMAGE</span>
+                            </div>
+                        )}
+                    </a>
+                    
+                    <div class="p-6 flex flex-col flex-1">
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-3 uppercase tracking-wider font-semibold">
+                            {/* Optional Category or just Date */}
+                            <time datetime={item.published_at || item.created_at}>
+                                {new Date(item.published_at || item.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                            </time>
+                        </div>
+
+                        <h2 class="text-xl font-bold text-gray-900 mb-3 leading-snug hover:text-[#009640] transition-colors">
+                            <a href={`/blog/${item.slug}`}>
+                                {item.title}
+                            </a>
+                        </h2>
+
+                        <p class="text-gray-600 text-sm line-clamp-3 mb-6 flex-1">
+                            {item.excerpt || "Leia mais sobre este assunto em nosso blog..."}
+                        </p>
+
+                        <a href={`/blog/${item.slug}`} class="inline-flex items-center text-[#009640] font-semibold text-sm hover:underline mt-auto group">
+                            Ler Mais
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+            ))}
+        </div>
+
+        {/* Pagination */}
+        {page.lastPage > 1 && (
+            <div class="flex justify-center mt-16 gap-2">
+                {page.url.prev && (
+                    <a href={page.url.prev} class="px-5 py-3 bg-white border border-gray-200 text-gray-700 rounded-full hover:bg-[#009640] hover:text-white transition-all shadow-sm font-medium">
+                        &larr; Anterior
+                    </a>
+                )}
+                <span class="px-5 py-3 text-gray-400 font-medium">
+                    {page.currentPage} / {page.lastPage}
+                </span>
+                {page.url.next && (
+                    <a href={page.url.next} class="px-5 py-3 bg-white border border-gray-200 text-gray-700 rounded-full hover:bg-[#009640] hover:text-white transition-all shadow-sm font-medium">
+                        Próxima &rarr;
+                    </a>
+                )}
+            </div>
+        )}
+    </div>
+</Layout>
