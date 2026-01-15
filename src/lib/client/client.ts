@@ -16,7 +16,7 @@ export class RushClient {
         this.siteSlug = config.siteSlug;
     }
 
-    async request<T>(endpoint: string, params: Record<string, any> = {}): Promise<T> {
+    async request<T>(endpoint: string, params: Record<string, any> = {}, options: RequestInit = {}): Promise<T> {
         const queryParams = new URLSearchParams();
 
         Object.entries(params).forEach(([key, value]) => {
@@ -32,23 +32,34 @@ export class RushClient {
             }
         });
 
-        const url = `${this.baseUrl}/api/v1/${this.siteSlug}${endpoint}?${queryParams.toString()}`;
+        const url = `${this.baseUrl}/api/v1/${this.siteSlug}${endpoint}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
         
         const headers: Record<string, string> = {
             "Authorization": `Bearer ${this.apiToken}`,
             "Accept": "application/json",
+            ...((options.headers as Record<string, string>) || {})
         };
 
         if (params.locale) {
             headers["Accept-Language"] = params.locale;
         }
 
-        const response = await fetch(url, { headers });
+        const response = await fetch(url, { ...options, headers });
 
         if (!response.ok) {
             throw new Error(`RushCMS API Error: ${response.status} ${response.statusText}`);
         }
 
         return await response.json();
+    }
+
+    async post<T>(endpoint: string, body: any, params: Record<string, any> = {}): Promise<T> {
+        return this.request<T>(endpoint, params, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 }
