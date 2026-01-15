@@ -1,0 +1,25 @@
+---
+import Layout from '@/layouts/layout.astro';
+import Home from '~icons/lucide/home';
+---
+
+<Layout title="Página não encontrada - Colégio Imperatrice">
+    <div class="min-h-[60vh] flex flex-col items-center justify-center text-center px-4 py-16">
+        <h1 class="text-9xl font-extrabold text-[#009640] opacity-20 select-none">404</h1>
+        <div class="relative -mt-16 z-10 flex flex-col items-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Ops! Página não encontrada
+            </h2>
+            <p class="text-gray-600 max-w-md mb-8 text-lg">
+                Parece que a página que você está procurando não existe ou foi movida.
+            </p>
+            <a 
+                href="/" 
+                class="inline-flex items-center gap-2 px-8 py-4 bg-[#009640] text-white font-bold rounded-lg hover:bg-[#007a33] transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all uppercase tracking-wide"
+            >
+                <Home class="w-5 h-5" />
+                Voltar para o Início
+            </a>
+        </div>
+    </div>
+</Layout>
