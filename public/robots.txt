@@ -1,0 +1,12 @@
+# robots.txt for Colégio Imperatrice
+
+User-agent: *
+Allow: /
+
+# Disallow admin and private paths
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Sitemap
+Sitemap: https://colegioimperatrice.com.br/sitemap.xml

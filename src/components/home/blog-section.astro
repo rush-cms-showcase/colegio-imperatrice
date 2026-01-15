@@ -1,0 +1,81 @@
+---
+import { rush } from "@/lib/rush";
+import { rushConfig } from "../../../rush.config";
+import FileText from '~icons/lucide/file-text';
+
+const collectionId = rushConfig.routes['/blog'];
+let posts = [];
+
+try {
+    // @ts-ignore
+    const response = await rush.getEntries(collectionId, { limit: 3 });
+    // @ts-ignore
+    posts = response.data || [];
+} catch (e) {
+    console.error('Failed to fetch blog posts', e);
+}
+
+if (posts.length === 0) return;
+---
+
+<section class="w-full pb-16 lg:pb-32">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-center lg:justify-between flex-col lg:flex-row items-center lg:items-end mb-8">
+            <h2 class="text-3xl lg:text-4xl font-bold text-primary text-[#009640]">
+                Últimos Posts
+            </h2>
+            <div class="flex gap-4 items-center justify-center text-sm max-lg:mt-2">
+                <span class="text-gray-500 tracking-wider font-medium max-lg:hidden">
+                    Clique ao lado para
+                </span>
+                <a href="/blog" class="uppercase bg-gray-200 px-4 py-2 rounded text-gray-600 font-bold hover:bg-gray-600 hover:text-white transition-colors">
+                    Ver Todos
+                </a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {posts.map((post: any) => {
+                // Simplified category logic (mock or field check)
+                const category = post.categories && post.categories.length > 0 ? post.categories[0] : null;
+
+                return (
+                    <div class="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow">
+                        <a href={`/blog/${post.slug}`} class="block group">
+                            <div class="relative aspect-[4/3] rounded-xl overflow-hidden mb-4">
+                                {post.featured_image ? (
+                                    <img
+                                        src={post.featured_image.url}
+                                        alt={post.title}
+                                        class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                ) : (
+                                    <div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400">
+                                        <FileText width="48" height="48" />
+                                    </div>
+                                )}
+                            </div>
+
+                            {category && (
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="w-2 h-2 rounded-full bg-[#009640]"></div>
+                                    <span class="text-xs font-bold text-[#009640] uppercase tracking-wide">
+                                        {category.title || category.name}
+                                    </span>
+                                </div>
+                            )}
+
+                            <h3 class="text-lg font-bold text-[#009640] mb-3 line-clamp-2 group-hover:text-[#007a33] transition-colors">
+                                {post.title}
+                            </h3>
+
+                            <span class="inline-block px-4 py-2 bg-[#009640] text-white text-xs font-bold rounded uppercase tracking-wider group-hover:bg-[#007a33] transition-colors">
+                                Ler Mais
+                            </span>
+                        </a>
+                    </div>
+                );
+            })}
+        </div>
+    </div>
+</section>
