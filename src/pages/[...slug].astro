@@ -1,4 +1,4 @@
----
+import Layout from '../layouts/Layout.astro';
 import { rushConfig } from "../../rush.config";
 import { rush } from "@/lib/rush";
 
@@ -8,24 +8,20 @@ export async function getStaticPaths() {
     // Loop through each route config
     for (const [routePath, collectionId] of Object.entries(rushConfig.routes)) {
         // 1. Create the "Archive" (List) page for this route
-        // e.g. /blog
         paths.push({
             params: { slug: routePath === '/' ? undefined : routePath.replace(/^\//, '') },
             props: { 
                 type: 'archive', 
                 collectionId,
-                title: routePath // You might want a better title mapping later
+                title: routePath 
             }
         });
 
         // 2. Fetch all entries for this collection to create detail pages
-        // e.g. /blog/my-post
         try {
-            // Fetch all entries (we might need pagination loop if > 100, but for now simple)
-            const entriesKey = Array.isArray(collectionId) ? collectionId[0] : collectionId; // Handle array case if needed
+            const entriesKey = Array.isArray(collectionId) ? collectionId[0] : collectionId;
             // @ts-ignore
             const response = await rush.getEntries(entriesKey, { limit: 1000 });
-            
             // @ts-ignore
             const items = response.data || [];
 
@@ -51,29 +47,40 @@ export async function getStaticPaths() {
     return paths;
 }
 
-const { type, item, collectionId } = Astro.props;
+const { type, item, collectionId, title } = Astro.props;
+
+let archiveItems = [];
+if (type === 'archive') {
+    const entriesKey = Array.isArray(collectionId) ? collectionId[0] : collectionId;
+    try {
+        // @ts-ignore
+        const res = await rush.getEntries(entriesKey, { limit: 20 });
+        // @ts-ignore
+        archiveItems = res.data || [];
+    } catch (e) {
+        console.error("Failed to load archive items", e);
+    }
+}
 ---
 
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{item?.title || 'Imperatrice'}</title>
-</head>
-<body class="bg-gray-50 text-gray-900 font-sans">
+<Layout title={item?.title || title || 'Imperatrice'}>
     <div class="max-w-4xl mx-auto p-8">
         {type === 'archive' && (
             <div>
-                <h1 class="text-3xl font-bold mb-6">Archive View (Collection {collectionId})</h1>
-                <p>Listing entries needed here...</p>
-                <pre class="bg-gray-200 p-4 rounded overflow-auto mt-4">
-                    Wait for component implementation...
-                </pre>
+                <h1 class="text-3xl font-bold mb-6 text-gray-900">Archive (ID: {collectionId})</h1>
+                <div class="grid gap-6 md:grid-cols-2">
+                    {archiveItems.map((entry: any) => (
+                        <a href={Astro.url.pathname.replace(/\/$/, '') + '/' + entry.slug} class="block bg-white rounded-lg shadow hover:shadow-md transition-shadow p-6">
+                            <h2 class="text-xl font-semibold mb-2">{entry.title}</h2>
+                            {entry.excerpt && <p class="text-gray-600">{entry.excerpt}</p>}
+                        </a>
+                    ))}
+                </div>
             </div>
         )}
 
         {type === 'entry' && item && (
-            <div>
+            <article class="prose lg:prose-xl bg-white p-8 rounded-lg shadow-sm">
                  <h1 class="text-4xl font-bold mb-4">{item.title}</h1>
                  {item.featured_image && (
                      <img 
@@ -83,8 +90,7 @@ const { type, item, collectionId } = Astro.props;
                     />
                  )}
                  <div class="prose max-w-none" set:html={item.content}></div>
-            </div>
+            </article>
         )}
     </div>
-</body>
-</html>
+</Layout>
