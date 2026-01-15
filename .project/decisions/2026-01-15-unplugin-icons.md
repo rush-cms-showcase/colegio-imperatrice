@@ -6,34 +6,34 @@ consulted: []
 informed: []
 ---
 
-# Adoção de unplugin-icons
+# Adoption of unplugin-icons
 
-## Contexto e Problema
-O projeto utilizava componentes `.astro` individuais contendo SVGs inline ou arquivos `.svg` brutos para ícones. Isso gerava:
-1.  **Manutenção manual**: Necessidade de copiar/colar SVGs para cada novo ícone.
-2.  **Inconsistência**: Diferentes fontes e estilos de ícones.
-3.  **Boilerplate**: Criação de múltiplos arquivos para funcionalidade simples.
-4.  **Performance**: Carregamento de SVGs não otimizados.
+## Context and Problem
+The project was using individual `.astro` components containing inline SVGs or raw `.svg` files for icons. This resulted in:
+1.  **Manual Maintenance**: Need to copy/paste SVGs for every new icon.
+2.  **Inconsistency**: Different icon sources and styles.
+3.  **Boilerplate**: Creation of multiple files for simple functionality.
+4.  **Performance**: Loading of non-optimized SVGs.
 
-## Decisão
-Adotamos a biblioteca **`unplugin-icons`** em conjunto com os datasets do **Iconify** (especificamente `lucide` e `fa-brands`).
+## Decision
+We adopted the **`unplugin-icons`** library in conjunction with **Iconify** datasets (specifically `lucide` and `fa-brands`).
 
-## Justificativa (Por que unplugin-icons?)
-1.  **On-demand**: O compilador gera apenas os ícones que estão sendo usados no projeto.
-2.  **Zero Runtime**: Os ícones são compilados como componentes funcionais no build, sem overhead de client-side JS extra para fetch.
-3.  **Agnóstico**: Funciona bem com Astro (via integração Vite).
-4.  **Padronização**: Acesso a bibliotecas padrão da indústria (Lucide, FontAwesome, Material) com uma única sintaxe.
-5.  **Flexibilidade**: Suporta `currentColor` e props de classe CSS nativamente.
+## Rationale (Why unplugin-icons?)
+1.  **On-demand**: The compiler generates only the icons actually used in the project.
+2.  **Zero Runtime**: Icons are compiled as functional components at build time, with no extra client-side JS overhead for fetching.
+3.  **Agnostic**: Works well with Astro (via Vite integration).
+4.  **Standardization**: Access to industry-standard libraries (Lucide, FontAwesome, Material) with a single syntax.
+5.  **Flexibility**: Natively supports `currentColor` and CSS class props.
 
-## Vantagens
-- **DX (Developer Experience)**: Importar ícones é trivial (`import Icon from '~icons/set/name'`) sem criar arquivos.
-- **Limpeza**: Remoção da pasta `src/icons` e `src/assets/icons` cheia de arquivos avulsos.
-- **Bundle Size**: Tree-shaking automático garantido pelo plugin.
+## Advantages
+- **DX (Developer Experience)**: Trivial icon import (`import Icon from '~icons/set/name'`) without creating files.
+- **Cleanliness**: Removal of `src/icons` and `src/assets/icons` folders full of loose files.
+- **Bundle Size**: Automatic tree-shaking guaranteed by the plugin.
 
-## Desafios e Resoluções
-- **Configuração no Astro**: Houve um conflito inicial com o compilador Astro (`panic: html: bad parser state`), que foi resolvido garantindo a estrutura correta dos componentes `.astro` (adicionando fences `---` faltantes que causavam o erro de parseamento ao injetar o plugin).
-- **TypeScript**: Necessário adicionar `/// <reference types="unplugin-icons/types/astro" />` no `env.d.ts` para o VS Code reconhecer os imports virtuais.
+## Challenges and Resolutions
+- **Astro Config**: There was an initial conflict with the Astro compiler (`panic: html: bad parser state`), resolved by ensuring correct structure of `.astro` components (restoring missing fences `---` that caused parsing errors when injecting the plugin).
+- **TypeScript**: Necessary to add `/// <reference types="unplugin-icons/types/astro" />` in `env.d.ts` for VS Code to recognize virtual imports.
 
-## Consequências
-- A partir de agora, novos ícones devem ser importados diretamente via `~icons/...`.
-- Não devemos criar componentes `.astro` para wrappers de ícones simples, a menos que haja lógica de negócio atrelada.
+## Consequences
+- From now on, new icons must be imported directly via `~icons/...`.
+- We should not create `.astro` components for simple icon wrappers unless there is business logic attached.
