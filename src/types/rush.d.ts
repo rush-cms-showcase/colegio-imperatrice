@@ -43,8 +43,12 @@ export interface RushSiteConfig {
 }
 
 export interface CmsImage {
+  id?: number
   url: string
+  name?: string
   alt?: string
+  width?: number
+  height?: number
 }
 
 export interface CmsEntry {
@@ -60,6 +64,13 @@ export interface CmsEntry {
   created_at: string
   updated_at?: string
   data?: Record<string, unknown>
-  list?: unknown[]
+  list?: CmsListItem[]
   about?: unknown
+}
+
+export interface CmsListItem {
+  name?: string
+  position?: string
+  details?: string
+  [key: string]: unknown
 }

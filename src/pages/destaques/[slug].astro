@@ -2,7 +2,7 @@
 import Layout from '@/layouts/layout.astro'
 import { rush, getCollectionId } from "@/lib/rush"
 import MasonryGallery from '@/components/gallery/masonry-gallery.astro'
-import type { CmsEntry } from '@/types/rush'
+import type { CmsEntry, CmsListItem } from '@/types/rush'
 
 export async function getStaticPaths() {
     try {
@@ -63,8 +63,8 @@ function renderRichText(node: any): string {
     }
 }
 
-const aboutContent = item.data?.about || item.about || item.content;
-const achievements = item.data?.list || item.list || [];
+const aboutContent = (item.data?.about ?? item.about ?? item.content) as unknown
+const achievements = ((item.data?.list ?? item.list) || []) as CmsListItem[]
 
 ---
 

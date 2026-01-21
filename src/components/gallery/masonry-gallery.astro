@@ -1,20 +1,13 @@
 ---
-import 'photoswipe/style.css';
-
-interface Image {
-  id: number;
-  url: string;
-  name: string;
-  width?: number;
-  height?: number;
-}
+import 'photoswipe/style.css'
+import type { CmsImage } from '@/types/rush'
 
 interface Props {
-  images: Image[];
-  galleryID: string;
+  images: CmsImage[]
+  galleryID: string
 }
 
-const { images, galleryID } = Astro.props;
+const { images, galleryID } = Astro.props
 ---
 
 <div class="pswp-gallery" id={galleryID}>
