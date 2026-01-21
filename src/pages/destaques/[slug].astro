@@ -45,8 +45,8 @@ function renderRichText(node: any): string {
             return text;
         case 'heading':
             const level = node.attrs?.level || 2;
-            const sizes = { 1: 'text-4xl', 2: 'text-3xl', 3: 'text-2xl', 4: 'text-xl' };
-            const sizeClass = sizes[level] || 'text-lg';
+            const sizes: Record<number, string> = { 1: 'text-4xl', 2: 'text-3xl', 3: 'text-2xl', 4: 'text-xl' }
+            const sizeClass = sizes[level as number] || 'text-lg'
             return `<h${level} class="${sizeClass} font-bold text-[#009640] mt-8 mb-4">${renderRichText(node.content)}</h${level}>`;
         case 'bulletList':
             return `<ul class="list-disc pl-5 mb-4 space-y-2">${renderRichText(node.content)}</ul>`;

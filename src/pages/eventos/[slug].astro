@@ -2,7 +2,7 @@
 import Layout from '@/layouts/layout.astro'
 import { rush, getCollectionId } from "@/lib/rush"
 import MasonryGallery from '@/components/gallery/masonry-gallery.astro'
-import type { CmsEntry } from '@/types/rush'
+import type { CmsEntry, CmsImage } from '@/types/rush'
 
 export async function getStaticPaths() {
     try {
