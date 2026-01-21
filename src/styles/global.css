@@ -4,6 +4,15 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Colégio Imperatrice Brand Colors */
+  --color-primary: #009640;
+  --color-primary-dark: #007a33;
+  --color-primary-darker: #00642a;
+  --color-primary-light: #00A651;
+  --color-primary-lighter: #00BE36;
+  --color-secondary: #FFD000;
+
+  /* System Colors */
   --color-background: #EEEEEE;
   --color-foreground: var(--foreground);
   --font-sans: var(--font-poppins);
