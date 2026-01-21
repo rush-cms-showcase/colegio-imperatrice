@@ -3,26 +3,26 @@ import Layout from "../layouts/layout.astro";
 import { ContactForm } from "../components/contact-form";
 import { rushConfig } from "../../rush.config";
 
-const formId = rushConfig.locales.pt_BR.forms.contact;
+const formId = rushConfig.locales!.pt_BR!.forms.contact;
 ---
 
-<Layout title="Fale Conosco" description="Entre em contato com o Colégio Imperatrice">
+<Layout title="Fale Conosco">
     <section class="py-20 md:py-32 bg-gray-50">
         <div class="max-w-2xl mx-auto px-4">
-            <div className="text-center mb-12">
-                <span className="text-blue-600 font-semibold tracking-wide uppercase text-sm mb-2 block">
+            <div class="text-center mb-12">
+                <span class="text-[#009640] font-semibold tracking-wide uppercase text-sm mb-2 block">
                     Fale Conosco
                 </span>
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <h1 class="text-3xl md:text-4xl font-bold text-[#009640] mb-4">
                     Entre em Contato
                 </h1>
-                <p className="text-gray-600 text-lg">
+                <p class="text-gray-600 text-lg">
                     Estamos prontos para atender você. Preencha o formulário abaixo ou utilize nossos canais de atendimento.
                 </p>
             </div>
 
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                <ContactForm client:load formId={formId} />
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <ContactForm client:visible formId={formId} />
             </div>
         </div>
     </section>
