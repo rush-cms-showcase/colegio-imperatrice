@@ -18,11 +18,9 @@ const { images, galleryID } = Astro.props;
 ---
 
 <div class="pswp-gallery" id={galleryID}>
-  {/* Masonry Layout using CSS Columns */}
   <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
     {images.map((image, index) => {
-       // Fallback dimensions if API doesn't provide them, although specific dims are better for PhotoSwipe
-       const width = image.width || 1200; 
+       const width = image.width || 1200;
        const height = image.height || 800;
        
        return (
@@ -31,12 +29,14 @@ const { images, galleryID } = Astro.props;
           data-pswp-width={width}
           data-pswp-height={height}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           class="block break-inside-avoid relative group overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-shadow"
         >
           <img
             src={image.url}
             alt={image.name}
+            width={width}
+            height={height}
             class="w-full h-auto object-cover transform transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
           />
@@ -50,15 +50,36 @@ const { images, galleryID } = Astro.props;
 <script>
   import PhotoSwipeLightbox from 'photoswipe/lightbox';
 
-  // Initialize all galleries found on the page
+  const updateImageDimensions = (gallery: Element) => {
+      const anchors = gallery.querySelectorAll('a');
+      anchors.forEach((anchor) => {
+          const img = anchor.querySelector('img');
+          if (img) {
+              const update = () => {
+                   if (img.naturalWidth && img.naturalHeight) {
+                       anchor.setAttribute('data-pswp-width', img.naturalWidth.toString());
+                       anchor.setAttribute('data-pswp-height', img.naturalHeight.toString());
+                   }
+              };
+
+              if (img.complete) {
+                  update();
+              } else {
+                  img.onload = update;
+              }
+          }
+      });
+  };
+
   const initLightbox = () => {
       const galleries = document.querySelectorAll('.pswp-gallery');
       galleries.forEach((gallery) => {
-          // Check if already initialized to avoid duplicates if view transitions used
+          updateImageDimensions(gallery);
+
           if ((gallery as any)._pswpInit) return;
           
           const lightbox = new PhotoSwipeLightbox({
-            gallery: '#' + gallery.id,
+            gallery: gallery as HTMLElement,
             children: 'a',
             pswpModule: () => import('photoswipe')
           });
@@ -67,8 +88,11 @@ const { images, galleryID } = Astro.props;
       });
   };
 
-  initLightbox();
-  
-  // Support View Transitions if enabled later
   document.addEventListener('astro:page-load', initLightbox);
+
+  if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLightbox);
+  } else {
+      initLightbox();
+  }
 </script>
