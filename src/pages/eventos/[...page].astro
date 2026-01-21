@@ -1,9 +1,10 @@
 ---
-import Layout from '@/layouts/layout.astro';
-import { rush } from "@/lib/rush";
-import { rushConfig } from "../../../rush.config";
+import Layout from '@/layouts/layout.astro'
+import Pagination from '@/components/pagination.astro'
+import { rush } from "@/lib/rush"
+import { rushConfig } from "../../../rush.config"
 
-export async function getStaticPaths({ paginate }) {
+export async function getStaticPaths({ paginate }: any) {
     const collectionId = rushConfig.routes['/eventos'];
     // @ts-ignore
     const response = await rush.getEntries(collectionId, { limit: 1000 });
@@ -13,10 +14,12 @@ export async function getStaticPaths({ paginate }) {
     return paginate(items, { pageSize: rushConfig.defaults.perPage || 12 });
 }
 
-const { page } = Astro.props;
+const { page } = Astro.props as { page: any }
+const pageTitle = page.currentPage > 1 ? `Eventos - Página ${page.currentPage}` : 'Eventos'
+const pageDescription = page.currentPage > 1 ? `Confira os eventos do Colégio Imperatrice - Página ${page.currentPage} de ${page.lastPage}` : 'Confira os próximos eventos do Colégio Imperatrice'
 ---
 
-<Layout title="Eventos">
+<Layout title={pageTitle} description={pageDescription}>
     <div class="container mx-auto px-4 py-8 md:py-12">
         <h1 class="text-3xl md:text-4xl font-bold text-[#009640] mb-8 uppercase tracking-wide">Eventos</h1>
 
@@ -27,50 +30,77 @@ const { page } = Astro.props;
             </div>
         ) : (
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {page.data.map((item) => (
-                    <a href={`/eventos/${item.slug}`} class="group relative w-full aspect-video block overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
-                        {/* Background Image */}
-                        {item.featured_image && (
-                            <div 
-                                class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                                style={`background-image: url('${item.featured_image.url}')`}
-                            />
-                        )}
-                        
-                        {/* Gradient Overlay */}
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90 transition-opacity" />
+                {page.data.map((item: any) => {
+                    const coverImage = item.featured_image || (item.images && item.images.length > 0 ? item.images[0] : null);
+                    const eventDate = new Date(item.published_at || item.created_at);
+                    const isPlaceholder = !coverImage;
 
-                        {/* Content */}
-                        <div class="absolute bottom-0 left-0 w-full p-6 flex flex-col justify-end h-full">
-                            <span class="text-white/80 text-sm font-medium mb-1 uppercase tracking-wider">
-                                {new Date(item.published_at || item.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })}
-                            </span>
-                            <h2 class="text-white font-bold text-xl md:text-2xl leading-tight group-hover:text-[#009640] transition-colors line-clamp-2">
-                                {item.title}
-                            </h2>
-                        </div>
-                    </a>
-                ))}
+                    const hash = item.slug.split('').reduce((acc: number, char: string) => acc + char.charCodeAt(0), 0);
+                    const variant = (hash % 3) + 1;
+
+                    return (
+                        <a href={`/eventos/${item.slug}`} class="group relative w-full aspect-video block overflow-hidden rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 bg-[#009640]">
+                            {coverImage ? (
+                                <div 
+                                    class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                    style={`background-image: url('${coverImage.url}')`}
+                                />
+                            ) : (
+                                <div class="absolute inset-0 overflow-hidden">
+                                    {variant === 1 && (
+                                        <svg class="absolute inset-0 w-full h-full opacity-30 text-[#00642a]" viewBox="0 0 400 600" preserveAspectRatio="none">
+                                            <path d="M-100 600 L200 600 L-100 300 Z" fill="currentColor" />
+                                            <path d="M-50 600 L350 600 L-50 200 Z" fill="currentColor" opacity="0.5" />
+                                            <path d="M0 600 L600 0 L600 600 Z" fill="currentColor" opacity="0.3" />
+                                        </svg>
+                                    )}
+                                    {variant === 2 && (
+                                        <svg class="absolute inset-0 w-full h-full opacity-30 text-[#00642a]" viewBox="0 0 400 600" preserveAspectRatio="none">
+                                            <path d="M0 600 L400 200 L400 350 L150 600 Z" fill="currentColor" opacity="0.6"/>
+                                            <path d="M0 400 L400 0 L400 150 L0 550 Z" fill="currentColor" opacity="0.6"/>
+                                        </svg>
+                                    )}
+                                    {variant === 3 && (
+                                        <svg class="absolute inset-0 w-full h-full opacity-30 text-[#00642a]" viewBox="0 0 400 600" preserveAspectRatio="none">
+                                            <polygon points="0,0 250,0 0,350" fill="currentColor" />
+                                            <polygon points="400,600 150,600 400,250" fill="currentColor" opacity="0.7" />
+                                        </svg>
+                                    )}
+                                </div>
+                            )}
+
+                            <div class="absolute inset-0 bg-linear-to-t from-[#004e21]/90 via-[#000000]/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+
+                            <div class="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-lg px-4 py-2 shadow-lg transform group-hover:scale-105 transition-transform duration-300">
+                                <div class="text-center leading-none">
+                                    <span class="block text-2xl font-black text-[#009640] mb-1">
+                                        {eventDate.getFullYear()}
+                                    </span>
+                                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-widest">
+                                        {eventDate.toLocaleDateString('pt-BR', { month: 'long' })}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class={`absolute bottom-0 left-0 w-full p-8 flex flex-col justify-end h-full ${isPlaceholder ? 'items-center text-center' : ''}`}>
+                                <h2 class="text-white font-bold text-2xl md:text-3xl leading-tight mb-2 group-hover:text-[#4ade80] transition-colors line-clamp-2 drop-shadow-md">
+                                    {item.title}
+                                </h2>
+                                <p class={`text-white/80 text-sm font-medium line-clamp-1 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-75 ${isPlaceholder ? 'hidden' : ''}`}>
+                                    Clique para ver mais detalhes &rarr;
+                                </p>
+                            </div>
+                        </a>
+                    );
+                })}
             </div>
         )}
 
-        {/* Pagination */}
-        {page.lastPage > 1 && (
-            <div class="flex justify-center mt-12 gap-2">
-                {page.url.prev && (
-                    <a href={page.url.prev} class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded hover:bg-[#009640] hover:text-white transition-colors">
-                        Anterior
-                    </a>
-                )}
-                <span class="px-4 py-2 text-gray-500">
-                    Página {page.currentPage} de {page.lastPage}
-                </span>
-                {page.url.next && (
-                    <a href={page.url.next} class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded hover:bg-[#009640] hover:text-white transition-colors">
-                        Próxima
-                    </a>
-                )}
-            </div>
-        )}
+        <Pagination
+            currentPage={page.currentPage}
+            lastPage={page.lastPage}
+            prevUrl={page.url.prev}
+            nextUrl={page.url.next}
+        />
     </div>
 </Layout>
