@@ -1,13 +1,12 @@
 ---
 import Layout from '@/layouts/layout.astro'
 import Pagination from '@/components/pagination.astro'
-import { rush } from "@/lib/rush"
+import { rush, getCollectionId } from "@/lib/rush"
 import { rushConfig } from "../../../rush.config"
 
 export async function getStaticPaths({ paginate }: any) {
-    const collectionId = rushConfig.routes['/eventos'] as string
-    
     try {
+        const collectionId = getCollectionId('/eventos')
         const response: any = await rush.getEntries(collectionId, { limit: 1000 })
         const items = response.data || []
         return paginate(items, { pageSize: rushConfig.defaults.perPage || 12 })

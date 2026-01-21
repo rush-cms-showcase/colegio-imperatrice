@@ -1,12 +1,10 @@
 ---
-import Layout from '@/layouts/layout.astro';
-import { rush } from "@/lib/rush";
-import { rushConfig } from "../../../rush.config";
+import Layout from '@/layouts/layout.astro'
+import { rush, getCollectionId } from "@/lib/rush"
 
 export async function getStaticPaths() {
-    const collectionId = rushConfig.routes['/blog'] as string
-    
     try {
+        const collectionId = getCollectionId('/blog')
         const response: any = await rush.getEntries(collectionId, { limit: 1000 })
         const items = response.data || []
 
@@ -20,7 +18,7 @@ export async function getStaticPaths() {
     }
 }
 
-const { item } = Astro.props;
+const { item } = Astro.props
 ---
 
 <Layout title={item.title}>
