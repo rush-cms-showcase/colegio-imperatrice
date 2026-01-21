@@ -7,8 +7,7 @@ const collectionId = rushConfig.routes['/eventos'];
 let events = [];
 
 try {
-    // @ts-ignore
-    const response = await rush.getEntries(collectionId, { limit: 2 });
+    const response = await rush.getEntries(collectionId, { perPage: 4 })
     // @ts-ignore
     events = response.data || [];
 } catch (e) {
