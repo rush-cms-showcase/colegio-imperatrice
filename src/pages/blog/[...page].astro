@@ -3,12 +3,13 @@ import Layout from '@/layouts/layout.astro'
 import Pagination from '@/components/pagination.astro'
 import { rush, getCollectionId } from "@/lib/rush"
 import { rushConfig } from "../../../rush.config"
+import type { CmsEntry } from '@/types/rush'
 
-export async function getStaticPaths({ paginate }: any) {
+export async function getStaticPaths({ paginate }: { paginate: Function }) {
     try {
         const collectionId = getCollectionId('/blog')
-        const response: any = await rush.getEntries(collectionId, { limit: 1000 })
-        const items = response.data || []
+        const response = await rush.getEntries(collectionId, { limit: 1000 })
+        const items = (response as { data?: CmsEntry[] }).data || []
         return paginate(items, { pageSize: rushConfig.defaults.perPage || 12 })
     } catch (e) {
         console.error('Failed to fetch blog entries:', e)
@@ -16,7 +17,7 @@ export async function getStaticPaths({ paginate }: any) {
     }
 }
 
-const { page } = Astro.props as { page: any }
+const { page } = Astro.props as { page: { currentPage: number; lastPage: number; data: CmsEntry[]; url: { prev?: string; next?: string } } }
 const pageTitle = page.currentPage > 1 ? `Blog - Página ${page.currentPage}` : 'Blog'
 const pageDescription = page.currentPage > 1 ? `Confira os artigos do blog do Colégio Imperatrice - Página ${page.currentPage} de ${page.lastPage}` : 'Confira os últimos artigos do blog do Colégio Imperatrice'
 ---

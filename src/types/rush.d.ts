@@ -41,3 +41,25 @@ export interface RushSiteConfig {
     perPage: number
   }
 }
+
+export interface CmsImage {
+  url: string
+  alt?: string
+}
+
+export interface CmsEntry {
+  id: number
+  slug: string
+  title: string
+  content?: string
+  excerpt?: string
+  description?: string
+  featured_image?: CmsImage
+  images?: CmsImage[]
+  published_at?: string
+  created_at: string
+  updated_at?: string
+  data?: Record<string, unknown>
+  list?: unknown[]
+  about?: unknown
+}
