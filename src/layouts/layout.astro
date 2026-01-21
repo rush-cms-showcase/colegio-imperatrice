@@ -6,16 +6,21 @@ import TopBar from '@/components/layout/top-bar.astro';
 import '@fontsource/poppins';
 import '@/styles/global.css';
 
-import { rush } from "@/lib/rush";
-import { rushConfig } from "../../rush.config";
-import type { NavItem } from "@/types/rush";
-import { mapMenuItem } from "@/lib/nav";
+import { rush } from "@/lib/rush"
+import { rushConfig } from "../../rush.config"
+import type { NavItem } from "@/types/rush"
+import { mapMenuItem } from "@/lib/nav"
+import { CONTACT } from "@/constants/contact"
 
 interface Props {
-	title: string;
+	title: string
+	description?: string
+	image?: string
+	noindex?: boolean
 }
 
-const { title } = Astro.props;
+const { title, description = "Colégio Imperatrice - Educação de qualidade com amor, carinho e dedicação. Metodologia COC, estrutura completa e equipe qualificada em Caraguatatuba-SP.", image = "/imperatrice-logo.png", noindex = false } = Astro.props
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 const pathname = Astro.url.pathname;
 const navs = rushConfig.locales[rushConfig.defaultLocale].navs;
 let topBarItems: NavItem[] = [];
@@ -46,10 +51,60 @@ if (navs?.main) mainMenuItems = await fetchMenu(navs.main);
 <html lang="pt-BR">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
+
 		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalURL} />
+		{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/icon-192x192.png" />
+
+		<link rel="icon" type="image/png" sizes="192x192" href="/icon-192x192.png" />
+		<link rel="icon" type="image/png" sizes="512x512" href="/icon-512x512.png" />
+
+		<meta name="theme-color" content="#009640" />
+		<meta name="msapplication-TileColor" content="#009640" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={new URL(image, Astro.site)} />
+		<meta property="og:locale" content="pt_BR" />
+		<meta property="og:site_name" content="Colégio Imperatrice" />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:url" content={canonicalURL} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={new URL(image, Astro.site)} />
+
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "EducationalOrganization",
+			"name": "Colégio Imperatrice",
+			"url": Astro.site,
+			"logo": new URL("/imperatrice-logo.png", Astro.site),
+			"description": description,
+			"address": {
+				"@type": "PostalAddress",
+				"streetAddress": `${CONTACT.address.street} - ${CONTACT.address.neighborhood}`,
+				"addressLocality": CONTACT.address.city,
+				"addressRegion": CONTACT.address.state,
+				"postalCode": CONTACT.address.zipCode,
+				"addressCountry": "BR"
+			},
+			"telephone": CONTACT.phone.raw,
+			"email": CONTACT.email.general,
+			"sameAs": [
+				CONTACT.social.facebook,
+				CONTACT.social.instagram
+			]
+		})} />
 	</head>
 	<body class="bg-background text-gray-900 font-sans antialiased min-h-screen flex flex-col">
         <TopBar items={topBarItems} />
