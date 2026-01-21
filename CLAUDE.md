@@ -11,7 +11,6 @@
 - **Languages**: TypeScript + Astro. (React/Vue/Svelte for Islands).
 - **Naming**: 
   - Files: `kebab-case` (e.g., `hero-section.astro`).
-  - Components: `PascalCase` (e.g., `<HeroSection />`).
 - **Semicolons**: **NO SEMICOLONS**. (Strict project rule).
 
 ## Project Structure
