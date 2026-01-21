@@ -18,16 +18,16 @@ const { items = [] } = Astro.props
     <div class="container mx-auto px-4 flex justify-between items-center">
         <div class="flex items-center w-full md:w-auto justify-between md:justify-start md:gap-6">
             <div class="flex items-center gap-6 md:gap-6">
-                 <a href={CONTACT.phone.link} class="flex items-center gap-1 hover:text-[#009640] transition-colors p-1 md:p-0" aria-label="Telefone">
-                    <Phone width="16" height="16" />
-                    <span class="hidden md:inline">{CONTACT.phone.display}</span>
+                 <a href={CONTACT.phone.link} class="flex items-center gap-1 hover:text-[#009640] transition-colors p-2 border border-gray-300 rounded-lg md:border-0 md:p-0" aria-label="Telefone">
+                    <Phone width="20" height="20" class="md:w-4 md:h-4" />
+                    <span class="hidden md:inline">{ CONTACT.phone.display}</span>
                 </a>
-                <a href={CONTACT.whatsapp.link} class="flex items-center gap-1 hover:text-[#009640] transition-colors p-1 md:p-0" aria-label="WhatsApp">
-                    <WhatsApp width="16" height="16" />
+                <a href={CONTACT.whatsapp.link} class="flex items-center gap-1 hover:text-[#009640] transition-colors p-2 border border-gray-300 rounded-lg md:border-0 md:p-0" aria-label="WhatsApp">
+                    <WhatsApp width="20" height="20" class="md:w-4 md:h-4" />
                     <span class="hidden md:inline">{CONTACT.whatsapp.display}</span>
                 </a>
-                <a href={`mailto:${CONTACT.email.general}`} class="flex items-center gap-1 hover:text-[#009640] transition-colors p-1 md:p-0" aria-label="Email">
-                    <Mail width="16" height="16" />
+                <a href={`mailto:${CONTACT.email.general}`} class="flex items-center gap-1 hover:text-[#009640] transition-colors p-2 border border-gray-300 rounded-lg md:border-0 md:p-0" aria-label="Email">
+                    <Mail width="20" height="20" class="md:w-4 md:h-4" />
                     <span class="hidden md:inline">{CONTACT.email.general}</span>
                 </a>
             </div>
@@ -35,11 +35,11 @@ const { items = [] } = Astro.props
             <div class="h-4 w-px bg-gray-300 mx-2 hidden md:block" />
 
             <div class="flex items-center gap-6 md:gap-3">
-                <a href={CONTACT.social.facebook} target="_blank" rel="noopener noreferrer" class="hover:text-[#009640] transition-colors p-1 md:p-0" aria-label="Facebook">
-                     <Facebook width="16" height="16" />
+                <a href={CONTACT.social.facebook} target="_blank" rel="noopener noreferrer" class="hover:text-[#009640] transition-colors p-2 border border-gray-300 rounded-lg md:border-0 md:p-0" aria-label="Facebook">
+                     <Facebook width="20" height="20" class="md:w-4 md:h-4" />
                 </a>
-                <a href={CONTACT.social.instagram} target="_blank" rel="noopener noreferrer" class="hover:text-[#009640] transition-colors p-1 md:p-0" aria-label="Instagram">
-                    <Instagram width="16" height="16" />
+                <a href={CONTACT.social.instagram} target="_blank" rel="noopener noreferrer" class="hover:text-[#009640] transition-colors p-2 border border-gray-300 rounded-lg md:border-0 md:p-0" aria-label="Instagram">
+                    <Instagram width="20" height="20" class="md:w-4 md:h-4" />
                 </a>
             </div>
         </div>
