@@ -1,0 +1,97 @@
+---
+import ChevronDown from '~icons/lucide/chevron-down'
+
+const faqs = [
+    {
+        question: "Qual a plataforma de ensino?",
+        answer: "Trabalhamos com o COC, reconhecido pela qualidade dos conteúdos, abordagem atual e proposta pedagógica que estimula o pensamento crítico, a autonomia e a preparação contínua dos alunos ao longo da vida escolar."
+    },
+    {
+        question: "Quais os horários de entrada e saída?",
+        answer: "No Ensino Fundamental II e no Ensino Médio, as aulas acontecem no período da manhã, das 7h20 às 12h40. Já o Ensino Fundamental I funciona no período da tarde, das 13h às 18h."
+    },
+    {
+        question: "Há período integral?",
+        answer: "O Colégio Imperatrice oferece o período integral para os alunos do Fundamental I, realizado no contraturno, a partir das 7h30. Nesse tempo, os estudantes contam com a professora Mara, desenvolvendo atividades como realização de tarefas, culinária, brincadeiras e o Beach Play, em que as crianças vão à praia com o Tio Cláudio e a Tia Mara. Além disso, os alunos recebem café da manhã, fruta e almoço, garantindo uma rotina saudável e acolhedora."
+    },
+    {
+        question: "Como é o acompanhamento pedagógico?",
+        answer: "Acompanhamos cada aluno de forma próxima. Observamos seu ritmo, suas facilidades e dificuldades, atuando para que se desenvolva com segurança e confiança. Professores e equipe pedagógica trabalham em conjunto, oferecendo orientação e apoio para cada estudante. Assim, garantimos que todos avancem com protagonismo e se sintam valorizados ao longo de sua trajetória escolar."
+    },
+    {
+        question: "Há preparação para vestibulares e ENEM?",
+        answer: "Sim. O COC oferece uma base acadêmica forte desde o Ensino Fundamental. Ao longo da trajetória escolar, os alunos são constantemente estimulados a ampliar repertório, habilidades e conhecimentos. No 3º ano do Ensino Médio, o foco é intensificado, com preparação direcionada para vestibulares, ENEM e a escolha de carreira, auxiliando o estudante a seguir seus objetivos com segurança."
+    },
+    {
+        question: "Como é feita a comunicação com a família?",
+        answer: "A parceria com a família é essencial para nós. Por isso, mantemos uma comunicação aberta e constante com os responsáveis. A escola está sempre disponível para atendimento presencial ou remoto, e alguns professores utilizam agenda para o contato diário. Também contamos com a plataforma TecSof, onde registros importantes são centralizados, e grupos de WhatsApp das turmas para avisos, comunicados e dúvidas rápidas. Assim, os responsáveis participam ativamente da vida escolar do aluno."
+    },
+    {
+        question: "A escola oferece alimentação aos alunos?",
+        answer: "Sim. Além de contar com cantina dentro da escola, oferecemos almoço para os alunos a partir das 12h, com refeições pensadas para garantir energia e bem-estar durante o dia escolar, especialmente para quem permanece em horário estendido."
+    },
+    {
+        question: "Quais espaços e recursos a escola oferece?",
+        answer: "Nossa estrutura foi planejada para garantir conforto, segurança e experiências de aprendizagem diversificadas. Contamos com salas climatizadas e com projetores, quadra poliesportiva, playground, laboratório de Ciências, praça de convivência e refeitório. Nos momentos de intervalo, os alunos ainda têm à disposição mesas de ping-pong, pebolim e hóquei de mesa, contribuindo para socialização, diversão e qualidade do tempo livre."
+    },
+    {
+        question: "A escola tem ações sustentáveis?",
+        answer: "Sim. A sustentabilidade faz parte do dia a dia do Colégio Imperatrice. Utilizamos painéis solares para geração de energia limpa, captação de água da chuva para uso nos banheiros e limpeza, e uma estrutura moderna que combina contêineres com alvenaria, reduzindo o impacto ambiental. Além disso, os banheiros possuem secadores de mãos, diminuindo o uso de papel e estimulando práticas conscientes entre os alunos."
+    },
+    {
+        question: "Como é o processo de matrícula e visita?",
+        answer: "É simples e acolhedor. Basta entrar em contato com a nossa equipe por telefone ou WhatsApp para agendar uma visita. Assim, o responsável pode conhecer de perto nossos espaços, a proposta pedagógica, o material didático e toda a equipe que acompanha a trajetória dos estudantes no Colégio Imperatrice."
+    }
+]
+---
+
+<section class="w-full py-20 bg-slate-50 md:py-28 overflow-hidden relative">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-[#009640]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-[#ffd000]/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+
+    <div class="container mx-auto px-4 relative z-10 max-w-4xl">
+        <div class="text-center mb-16">
+            <span class="text-[#009640] font-bold tracking-wider uppercase text-sm mb-4 block">Dúvidas Frequentes</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-display">
+                Perguntas e Respostas
+            </h2>
+            <div class="w-20 h-1 bg-[#ffd000] mx-auto rounded-full"></div>
+        </div>
+
+        <div class="space-y-4">
+            {faqs.map((faq, index) => (
+                <details class="group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 overflow-hidden" name="faq-accordion">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer list-none select-none">
+                        <h3 class="text-lg font-bold text-gray-800 pr-8 group-open:text-[#009640] transition-colors">
+                            {faq.question}
+                        </h3>
+                        <span class="text-[#009640] transition-transform duration-300 group-open:rotate-180 shrink-0 bg-[#009640]/10 p-2 rounded-full group-hover:bg-[#009640]/20">
+                            <ChevronDown class="w-5 h-5" />
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-600 leading-relaxed animate-accordion-down">
+                        <p>{faq.answer}</p>
+                    </div>
+                </details>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style>
+    details > summary {
+        list-style: none;
+    }
+    details > summary::-webkit-details-marker {
+        display: none;
+    }
+
+    details[open] div {
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        0% { opacity: 0; transform: translateY(-5px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+</style>
