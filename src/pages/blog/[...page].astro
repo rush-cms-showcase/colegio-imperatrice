@@ -5,13 +5,16 @@ import { rush } from "@/lib/rush"
 import { rushConfig } from "../../../rush.config"
 
 export async function getStaticPaths({ paginate }: any) {
-    const collectionId = rushConfig.routes['/blog'];
-    // @ts-ignore
-    const response = await rush.getEntries(collectionId, { limit: 1000 });
-    // @ts-ignore
-    const items = response.data || [];
-
-    return paginate(items, { pageSize: rushConfig.defaults.perPage || 12 });
+    const collectionId = rushConfig.routes['/blog'] as string
+    
+    try {
+        const response: any = await rush.getEntries(collectionId, { limit: 1000 })
+        const items = response.data || []
+        return paginate(items, { pageSize: rushConfig.defaults.perPage || 12 })
+    } catch (e) {
+        console.error('Failed to fetch blog entries:', e)
+        return paginate([], { pageSize: rushConfig.defaults.perPage || 12 })
+    }
 }
 
 const { page } = Astro.props as { page: any }
