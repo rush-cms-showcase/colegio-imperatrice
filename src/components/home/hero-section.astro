@@ -5,89 +5,118 @@ import Sprout from '~icons/lucide/sprout'
 import Smartphone from '~icons/lucide/smartphone'
 import GraduationCap from '~icons/lucide/graduation-cap'
 import MessageCircle from '~icons/lucide/message-circle'
+import Award from '~icons/lucide/award'
+import Heart from '~icons/lucide/heart'
+
+const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP
+const whatsappVisitMessage = encodeURIComponent("Olá! Gostaria de agendar uma visita ao Colégio Imperatrice.")
+const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappVisitMessage}`
 ---
 
-<section class="relative w-full bg-gradient-to-br from-gray-50 to-white">
-    <div class="container mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[600px] lg:min-h-[700px] gap-0">
-            <div class="relative overflow-hidden order-2 lg:order-1 min-h-[400px] lg:min-h-full">
-                <Image
-                    src={bgHeader}
-                    alt="Sala de aula com alunos estudando - Colégio Imperatrice"
-                    class="object-cover w-full h-full"
-                    loading="eager"
-                    fetchpriority="high"
-                />
-                <div class="absolute inset-0 bg-gradient-to-r from-transparent to-gray-50/20 lg:to-transparent"></div>
+<section class="relative w-full lg:h-[calc(100svh-7rem)] flex items-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <Image
+            src={bgHeader}
+            alt="Sala de aula com alunos estudando - Colégio Imperatrice"
+            class="object-cover w-full h-full"
+            loading="eager"
+            fetchpriority="high"
+        />
+        <div class="absolute inset-0 bg-[#004e21]/90"></div>
+    </div>
+
+    <div class="absolute top-0 right-0 w-1/2 h-full opacity-10 max-lg:hidden">
+        <svg class="w-full h-full" viewBox="0 0 500 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="400" cy="200" r="300" fill="url(#grad1)"/>
+            <circle cx="350" cy="500" r="200" fill="url(#grad2)"/>
+            <defs>
+                <radialGradient id="grad1">
+                    <stop offset="0%" style="stop-color:#FFD000;stop-opacity:0.4" />
+                    <stop offset="100%" style="stop-color:#FFD000;stop-opacity:0" />
+                </radialGradient>
+                <radialGradient id="grad2">
+                    <stop offset="0%" style="stop-color:#00BE36;stop-opacity:0.3" />
+                    <stop offset="100%" style="stop-color:#00BE36;stop-opacity:0" />
+                </radialGradient>
+            </defs>
+        </svg>
+    </div>
+
+    <div class="container mx-auto px-4 py-20 lg:py-24 relative z-10">
+        <div class="max-w-5xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white/90 text-sm font-medium mb-6">
+                <Award width="16" height="16" class="text-[#FFD000]" />
+                <span>Excelência em Educação desde 1985</span>
             </div>
 
-            <div class="relative flex flex-col justify-center px-6 py-12 lg:px-12 xl:px-16 order-1 lg:order-2">
-                <div class="max-w-xl mx-auto lg:mx-0">
-                    <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold text-slate-900 mb-6 leading-tight">
-                        Educação com <span class="text-[#009640]">amor</span>, <span class="text-[#FFD000]">carinho</span> e dedicação
-                    </h1>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-6 leading-[1.1] tracking-tight">
+                Educação que transforma <br class="max-md:hidden"/>
+                <span class="text-[#FFD000]">sonhos em realidade</span>
+            </h1>
 
-                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-                        Somos mais que uma escola, somos uma família! Aqui seu filho aprende em um ambiente acolhedor e estimulante.
-                    </p>
+            <p class="text-lg md:text-xl lg:text-2xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
+                Metodologia COC, infraestrutura completa e equipe apaixonada por educar.
+                Aqui seu filho desenvolve todo o potencial.
+            </p>
 
-                    <div class="grid grid-cols-2 gap-4 mb-8">
-                        <a href="/contato" class="flex flex-col items-center text-center p-4 bg-white border-2 border-gray-100 hover:border-[#009640] rounded-xl transition-all cursor-pointer group shadow-sm hover:shadow-md">
-                            <div class="p-3 bg-green-50 rounded-full text-[#00A651] group-hover:bg-[#009640] group-hover:text-white transition-colors mb-2">
-                                <Sprout width="28" height="28" />
-                            </div>
-                            <span class="text-sm font-semibold text-gray-800">
-                                Agende Uma Visita
-                            </span>
-                        </a>
-
-                        <a href="/metodo-coc-de-ensino" class="flex flex-col items-center text-center p-4 bg-white border-2 border-gray-100 hover:border-[#009640] rounded-xl transition-all cursor-pointer group shadow-sm hover:shadow-md">
-                            <div class="p-3 bg-green-50 rounded-full text-[#00A651] group-hover:bg-[#009640] group-hover:text-white transition-colors mb-2">
-                                <Smartphone width="28" height="28" />
-                            </div>
-                            <span class="text-sm font-semibold text-gray-800">
-                                Nossa Metodologia
-                            </span>
-                        </a>
-
-                        <a href="/direcao-pedagogica" class="flex flex-col items-center text-center p-4 bg-white border-2 border-gray-100 hover:border-[#009640] rounded-xl transition-all cursor-pointer group shadow-sm hover:shadow-md">
-                            <div class="p-3 bg-green-50 rounded-full text-[#00A651] group-hover:bg-[#009640] group-hover:text-white transition-colors mb-2">
-                                <GraduationCap width="28" height="28" />
-                            </div>
-                            <span class="text-sm font-semibold text-gray-800">
-                                Nossa Equipe
-                            </span>
-                        </a>
-
-                        <a href="/depoimentos" class="flex flex-col items-center text-center p-4 bg-white border-2 border-gray-100 hover:border-[#009640] rounded-xl transition-all cursor-pointer group shadow-sm hover:shadow-md">
-                            <div class="p-3 bg-green-50 rounded-full text-[#00A651] group-hover:bg-[#009640] group-hover:text-white transition-colors mb-2">
-                                <MessageCircle width="28" height="28" />
-                            </div>
-                            <span class="text-sm font-semibold text-gray-800">
-                                Depoimentos
-                            </span>
-                        </a>
-                    </div>
-
-                    <div class="space-y-3">
-                        <a
-                            href="/contato"
-                            class="block text-center px-8 py-4 bg-[#009640] text-white font-bold rounded-lg hover:bg-[#007a33] transition-colors uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
-                        >
-                            Quero Matricular
-                        </a>
-                        <p class="text-xs text-center text-gray-500">
-                            Vagas limitadas para o ano letivo de 2026*
-                        </p>
-                    </div>
-                </div>
-
-                <div class="absolute -bottom-4 -right-4 w-32 h-32 opacity-10 max-lg:hidden">
-                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
-                        <path d="M182.432 7.8175C174.799 9.3914 169.878 16.8767 171.457 24.5312C172.462 29.4052 175.858 33.1767 180.16 34.8653C179.113 47.9835 175.595 67.4856 169.813 72.573C158.83 82.2277 145.341 73.8382 144.748 43.3536C151.508 41.1667 155.683 34.1715 154.211 27.0342C152.631 19.3735 145.163 14.4434 137.524 16.0185C129.886 17.5936 124.976 25.0764 126.556 32.7368C127.531 37.4647 130.757 41.1448 134.878 42.9083C134.566 60.0493 130.479 67.7111 123.666 68.1708C113.372 68.8659 107.806 51.1356 102.435 25.886C107.031 22.7752 109.534 17.089 108.342 11.3088C106.762 3.64805 99.2935 -1.282 91.6549 0.293101C84.0222 1.867 79.1131 9.34981 80.6927 17.0101C81.8847 22.7907 86.4385 27.0215 91.878 28.0629C96.9333 53.378 98.841 71.8627 89.106 75.2976C82.6671 77.5704 75.8819 72.1503 68.8215 56.5298C71.9147 53.2782 73.4092 48.6249 72.4344 43.8973C70.8547 36.2365 63.386 31.3065 55.7533 32.8804C48.1081 34.4569 43.1994 41.9396 44.779 49.5999C46.2507 56.7373 52.8519 61.5104 59.9258 60.8447C71.4406 89.0776 62.3765 102.117 48.4767 97.5933C41.1414 95.2105 30.2013 78.6898 24.0512 67.0555C27.334 63.803 28.9553 58.9968 27.9503 54.1228C26.3719 46.4683 18.9031 41.5378 11.2584 43.1142C3.63146 44.6869 -1.28349 52.1709 0.294896 59.8254C1.78921 67.0722 8.55932 71.8674 15.7513 71.038L44.3325 159.123C44.3325 159.123 86.9352 144.375 119.963 137.565C152.992 130.754 197.953 127.446 197.953 127.446L189.352 35.2408C196.291 33.1563 200.606 26.0753 199.112 18.8285C197.534 11.174 190.065 6.24353 182.432 7.8175Z" fill="#FFD000"/>
-                    </svg>
-                </div>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                <a
+                    href={whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group relative px-8 py-5 bg-[#FFD000] text-[#004e21] font-bold text-lg rounded-xl hover:bg-[#ffd000]/90 transition-all shadow-2xl shadow-[#FFD000]/20 hover:shadow-[#FFD000]/40 hover:scale-105 w-full sm:w-auto"
+                >
+                    <span class="relative z-10 flex items-center justify-center gap-2">
+                        <Heart width="20" height="20" class="group-hover:scale-110 transition-transform" />
+                        Agende uma Visita
+                    </span>
+                </a>
+                <a
+                    href="/metodo-coc-de-ensino"
+                    class="px-8 py-5 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white font-bold text-lg rounded-xl hover:bg-white/20 hover:border-white/50 transition-all w-full sm:w-auto"
+                >
+                    Conheça a Metodologia
+                </a>
             </div>
+
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 max-w-4xl mx-auto">
+                <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="group p-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all hover:scale-105">
+                    <div class="w-12 h-12 mx-auto mb-3 bg-[#FFD000]/20 rounded-xl flex items-center justify-center group-hover:bg-[#FFD000] transition-colors">
+                        <Sprout width="24" height="24" class="text-[#FFD000] group-hover:text-[#004e21]" />
+                    </div>
+                    <span class="text-white font-semibold text-sm block">Agende Visita</span>
+                </a>
+
+                <a href="/metodo-coc-de-ensino" class="group p-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all hover:scale-105">
+                    <div class="w-12 h-12 mx-auto mb-3 bg-[#FFD000]/20 rounded-xl flex items-center justify-center group-hover:bg-[#FFD000] transition-colors">
+                        <Smartphone width="24" height="24" class="text-[#FFD000] group-hover:text-[#004e21]" />
+                    </div>
+                    <span class="text-white font-semibold text-sm block">Metodologia</span>
+                </a>
+
+                <a href="/direcao-pedagogica" class="group p-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all hover:scale-105">
+                    <div class="w-12 h-12 mx-auto mb-3 bg-[#FFD000]/20 rounded-xl flex items-center justify-center group-hover:bg-[#FFD000] transition-colors">
+                        <GraduationCap width="24" height="24" class="text-[#FFD000] group-hover:text-[#004e21]" />
+                    </div>
+                    <span class="text-white font-semibold text-sm block">Nossa Equipe</span>
+                </a>
+
+                <a href="/depoimentos" class="group p-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all hover:scale-105">
+                    <div class="w-12 h-12 mx-auto mb-3 bg-[#FFD000]/20 rounded-xl flex items-center justify-center group-hover:bg-[#FFD000] transition-colors">
+                        <MessageCircle width="24" height="24" class="text-[#FFD000] group-hover:text-[#004e21]" />
+                    </div>
+                    <span class="text-white font-semibold text-sm block">Depoimentos</span>
+                </a>
+            </div>
+
+            <p class="text-white/60 text-sm mt-8">
+                <span class="inline-flex items-center gap-1.5">
+                    <span class="w-2 h-2 bg-[#FFD000] rounded-full animate-pulse"></span>
+                    Vagas limitadas para 2026 - Garanta a matrícula do seu filho
+                </span>
+            </p>
         </div>
     </div>
+
+
 </section>
