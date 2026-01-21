@@ -4,16 +4,20 @@ import { rush } from "@/lib/rush";
 import { rushConfig } from "../../../rush.config";
 
 export async function getStaticPaths() {
-    const collectionId = rushConfig.routes['/blog'];
-    // @ts-ignore
-    const response = await rush.getEntries(collectionId, { limit: 1000 });
-    // @ts-ignore
-    const items = response.data || [];
+    const collectionId = rushConfig.routes['/blog'] as string
+    
+    try {
+        const response: any = await rush.getEntries(collectionId, { limit: 1000 })
+        const items = response.data || []
 
-    return items.map((item) => ({
-        params: { slug: item.slug },
-        props: { item },
-    }));
+        return items.map((item: any) => ({
+            params: { slug: item.slug },
+            props: { item },
+        }))
+    } catch (e) {
+        console.error('Failed to fetch blog entries:', e)
+        return []
+    }
 }
 
 const { item } = Astro.props;
