@@ -64,7 +64,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ formId }) => {
                     id="name"
                     name="name"
                     required
-                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#009640] focus:border-transparent outline-none transition-all"
                     placeholder="Seu nome completo"
                 />
             </div>
@@ -76,7 +76,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ formId }) => {
                     id="email"
                     name="email"
                     required
-                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#009640] focus:border-transparent outline-none transition-all"
                     placeholder="seu@email.com"
                 />
             </div>
@@ -88,7 +88,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ formId }) => {
                     name="message"
                     required
                     rows={5}
-                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#009640] focus:border-transparent outline-none transition-all resize-none"
                     placeholder="Como podemos ajudar?"
                 />
             </div>
@@ -96,7 +96,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ formId }) => {
             <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-blue-600 text-white font-medium py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-[#009640] text-white font-medium py-3 rounded-lg hover:bg-[#007a33] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 {isLoading ? 'Enviando...' : 'Enviar Mensagem'}
             </button>

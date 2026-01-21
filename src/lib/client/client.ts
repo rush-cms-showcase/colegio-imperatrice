@@ -21,7 +21,6 @@ export class RushClient {
 
         Object.entries(params).forEach(([key, value]) => {
             if (Array.isArray(value)) {
-                // Handle array params like include[] or categories
                 if (key === 'include') {
                      value.forEach(v => queryParams.append(`${key}[]`, v));
                 } else {

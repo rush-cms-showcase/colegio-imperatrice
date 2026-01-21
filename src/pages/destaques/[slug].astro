@@ -11,55 +11,152 @@ export async function getStaticPaths() {
     // @ts-ignore
     const items = response.data || [];
 
-    return items.map((item) => ({
+    return items.map((item: any) => ({
         params: { slug: item.slug },
         props: { item },
     }));
 }
 
 const { item } = Astro.props;
+
+function renderRichText(node: any): string {
+    if (!node) return '';
+    if (typeof node === 'string') return node;
+    if (Array.isArray(node)) return node.map(renderRichText).join('');
+    
+    switch (node.type) {
+        case 'doc':
+            return renderRichText(node.content);
+        case 'paragraph':
+            return `<p class="mb-4 leading-relaxed text-gray-700">${renderRichText(node.content)}</p>`;
+        case 'text':
+            let text = node.text || '';
+            if (node.marks) {
+                node.marks.forEach((mark: any) => {
+                    if (mark.type === 'bold') text = `<strong class="font-bold text-gray-900">${text}</strong>`;
+                    if (mark.type === 'italic') text = `<em class="italic">${text}</em>`;
+                    if (mark.type === 'link') text = `<a href="${mark.attrs.href}" class="text-[#009640] hover:underline" target="_blank" rel="noopener noreferrer">${text}</a>`;
+                    if (mark.type === 'underline') text = `<u class="underline">${text}</u>`;
+                });
+            }
+            return text;
+        case 'heading':
+            const level = node.attrs?.level || 2;
+            const sizes = { 1: 'text-4xl', 2: 'text-3xl', 3: 'text-2xl', 4: 'text-xl' };
+            const sizeClass = sizes[level] || 'text-lg';
+            return `<h${level} class="${sizeClass} font-bold text-[#009640] mt-8 mb-4">${renderRichText(node.content)}</h${level}>`;
+        case 'bulletList':
+            return `<ul class="list-disc pl-5 mb-4 space-y-2">${renderRichText(node.content)}</ul>`;
+        case 'orderedList':
+            return `<ol class="list-decimal pl-5 mb-4 space-y-2">${renderRichText(node.content)}</ol>`;
+        case 'listItem':
+            return `<li class="pl-1">${renderRichText(node.content)}</li>`;
+        case 'blockquote':
+            return `<blockquote class="border-l-4 border-[#009640] pl-4 italic text-gray-600 my-6">${renderRichText(node.content)}</blockquote>`;
+        case 'image':
+             return `<img src="${node.attrs.src}" alt="${node.attrs.alt || ''}" class="w-full h-auto rounded-lg my-8" />`;
+        default:
+            return node.content ? renderRichText(node.content) : '';
+    }
+}
+
+const aboutContent = item.data?.about || item.about || item.content;
+const achievements = item.data?.list || item.list || [];
+
 ---
 
 <Layout title={item.title}>
-    <article class="bg-white min-h-screen">
-        {/* Hero / Header */}
-        <div class="relative h-[50vh] min-h-[400px] w-full bg-gray-900 overflow-hidden">
-            {item.featured_image ? (
-                <div 
-                    class="absolute inset-0 bg-cover bg-center opacity-60"
-                    style={`background-image: url('${item.featured_image.url}')`}
-                />
-            ) : (
-                <div class="absolute inset-0 bg-gradient-to-br from-[#009640] to-gray-900 opacity-80" />
+    <div class="container mx-auto max-w-6xl px-4 py-8 md:py-12">
+        <a href="/destaques" class="inline-flex items-center text-gray-500 hover:text-[#009640] mb-8 uppercase tracking-wider text-sm font-bold transition-colors group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Voltar para Destaques
+        </a>
+
+        <div class={item.featured_image ? "grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12" : "max-w-4xl mx-auto"}>
+            {item.featured_image && (
+                <div class="md:col-span-1">
+                    <div class="sticky top-8">
+                        <div class="rounded-2xl overflow-hidden shadow-xl mb-6 aspect-3/4 relative group">
+                            <img 
+                                src={item.featured_image.url} 
+                                alt={item.featured_image.alt || item.title} 
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                            <div class="absolute inset-0 bg-linear-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+                    </div>
+                </div>
             )}
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-            
-            <div class="container mx-auto px-4 h-full flex flex-col justify-end pb-12 relative z-10">
-                <a href="/destaques" class="inline-flex items-center text-white/80 hover:text-white mb-6 uppercase tracking-wider text-sm font-medium transition-colors">
-                    &larr; Voltar para Destaques
-                </a>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-                    {item.title}
-                </h1>
-                <div class="flex items-center gap-4 text-white/90 text-lg">
-                    <time datetime={item.published_at || item.created_at}>
-                        {new Date(item.published_at || item.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })}
-                    </time>
-                </div>
-            </div>
-        </div>
 
-        {/* Content */}
-        <div class="container mx-auto px-4 py-12 md:py-20">
-            <div class="max-w-4xl mx-auto">
-                <div class="prose prose-lg prose-green max-w-none text-gray-700 leading-relaxed mb-16">
-                     <Fragment set:html={item.content} />
+            <div class={item.featured_image ? "md:col-span-2" : ""}>
+                <header class="mb-4 border-b border-gray-100 pb-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-[#009640]/10 text-[#009640] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">
+                            Destaque
+                        </span>
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-black text-[#009640] leading-tight">
+                        {item.title}
+                    </h1>
+                </header>
+
+                <div class="prose prose-lg prose-green max-w-none text-gray-600 leading-relaxed mb-12">
+                     <Fragment set:html={renderRichText(aboutContent)} />
                 </div>
 
-                {/* Gallery */}
+                {achievements && achievements.length > 0 && (
+                    <div class="mb-12">
+                        <h3 class="text-xl font-bold text-[#009640] mb-6 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
+                            Conquistas & Destaques
+                        </h3>
+                        <ul class="space-y-4">
+                            {achievements.map((achievement: any) => {
+                                const text = typeof achievement === 'string' 
+                                    ? achievement 
+                                    : (achievement.name || achievement.title || achievement.text || (achievement.description ? renderRichText(achievement.description) : '') || JSON.stringify(achievement));
+                                    
+                                const year = achievement.date || achievement.ano;
+
+                                return (
+                                    <li class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4 hover:shadow-md transition-shadow">
+                                        <div class="bg-[#009640]/10 p-2 rounded-full shrink-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#009640]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1">
+                                            <span class="text-gray-700 font-medium pt-0.5 block">
+                                                {achievement.name || achievement.title || text}
+                                            </span>
+                                            {achievement.position && (
+                                                <span class="text-sm text-[#009640] font-bold block mt-1">
+                                                    {achievement.position}
+                                                </span>
+                                            )}
+                                            {typeof achievement.description === 'object' && (
+                                                 <div class="text-sm text-gray-500 mt-2 prose prose-sm max-w-none" set:html={renderRichText(achievement.description)} />
+                                            )}
+                                        </div>
+                                        {year && (
+                                            <span class="text-xs font-bold text-gray-400 bg-gray-100 px-2 py-1 rounded">
+                                                {year}
+                                            </span>
+                                        )}
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+                )}
+
                 {item.images && item.images.length > 0 && (
-                    <div class="border-t border-gray-100 pt-16">
-                        <h2 class="text-3xl font-bold text-[#009640] mb-8 text-center uppercase tracking-wide">Galeria de Fotos</h2>
+                    <div class="pt-8 border-t border-gray-100">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-8">Galeria de Fotos</h2>
                         <MasonryGallery 
                             images={item.images} 
                             galleryID={`gallery-${item.id}`} 
@@ -68,5 +165,5 @@ const { item } = Astro.props;
                 )}
             </div>
         </div>
-    </article>
+    </div>
 </Layout>

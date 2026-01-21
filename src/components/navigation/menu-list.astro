@@ -57,7 +57,6 @@ const { items, class: className } = Astro.props;
 </ul>
 
 <script>
-  // Handle Click Toggles
   const toggles = document.querySelectorAll('.menu-toggle');
   
   toggles.forEach(toggle => {
@@ -67,14 +66,11 @@ const { items, class: className } = Astro.props;
           const parent = btn.closest('.menu-item');
           const dropdown = parent?.querySelector('.dropdown-menu');
           const chevron = btn.querySelector('.chevron');
-          
+
           if (!dropdown) return;
 
           const match = dropdown.classList.contains('hidden');
 
-          // Close all others first (optional, but good UX for desktop menus)
-          // For mobile nested menus, maybe keep them open? 
-          // Let's close others at the same level for consistency.
           const list = btn.closest('.menu-list');
           list?.querySelectorAll('.dropdown-menu').forEach(d => {
               if (d !== dropdown) d.classList.add('hidden');
@@ -86,10 +82,9 @@ const { items, class: className } = Astro.props;
              }
           });
 
-          // Toggle current
           if (match) {
               dropdown.classList.remove('hidden');
-              dropdown.classList.add('flex'); // dropdown is flex-col
+              dropdown.classList.add('flex');
               btn.setAttribute('aria-expanded', 'true');
               chevron?.classList.add('rotate-180');
           } else {
@@ -101,7 +96,6 @@ const { items, class: className } = Astro.props;
       });
   });
 
-  // Close when clicking outside
   document.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
       if (!target.closest('.menu-item')) {

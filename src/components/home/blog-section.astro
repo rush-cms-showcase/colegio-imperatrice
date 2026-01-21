@@ -36,7 +36,6 @@ if (posts.length === 0) return;
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             {posts.map((post: any) => {
-                // Simplified category logic (mock or field check)
                 const category = post.categories && post.categories.length > 0 ? post.categories[0] : null;
 
                 return (

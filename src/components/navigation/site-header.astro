@@ -18,13 +18,11 @@ const { siteName, items, pathname } = Astro.props;
     <nav class="container mx-auto px-4">
         <div class="flex items-center justify-between h-20">
             <Brand siteName={siteName} />
-            
-            {/* Desktop Menu */}
+
             <div class="hidden lg:block">
                 <MenuList items={items} />
             </div>
 
-            {/* Mobile Menu Toggle */}
             <button id="mobile-menu-btn" class="lg:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors z-50 relative" aria-label="Abrir menu">
                  <div id="icon-menu">
                     <Menu width="28" height="28" />
@@ -35,8 +33,7 @@ const { siteName, items, pathname } = Astro.props;
             </button>
         </div>
     </nav>
-    
-    {/* Mobile Menu Overlay */}
+
     <div id="mobile-menu" class="hidden fixed inset-0 z-30 bg-[#009640] pt-28 px-4 lg:hidden overflow-y-auto">
         <MenuList items={items} class="flex-col gap-6! text-xl" />
     </div>
@@ -50,22 +47,19 @@ const { siteName, items, pathname } = Astro.props;
     const iconClose = document.getElementById('icon-close');
     let isOpen = false;
 
-
-
-    // Mobile Menu Toggle
     btn?.addEventListener('click', () => {
         isOpen = !isOpen;
         if (isOpen) {
             menu?.classList.remove('hidden');
             iconMenu?.classList.add('hidden');
             iconClose?.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Lock scroll
+            document.body.style.overflow = 'hidden';
             btn.setAttribute('aria-label', 'Fechar menu');
         } else {
             menu?.classList.add('hidden');
             iconMenu?.classList.remove('hidden');
             iconClose?.classList.add('hidden');
-            document.body.style.overflow = ''; // Unlock scroll
+            document.body.style.overflow = '';
             btn.setAttribute('aria-label', 'Abrir menu');
         }
     });

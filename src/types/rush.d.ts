@@ -36,10 +36,6 @@ export interface RushSiteConfig {
   url?: string
   locales: Record<string, LocaleConfig>
   defaultLocale: string
-  /**
-   * Routes configuration
-   * mapping path -> collection ID
-   */
   routes: Record<string, number | number[]>
   defaults: {
     perPage: number
