@@ -1,10 +1,11 @@
 ---
 import Layout from "../layouts/layout.astro";
-import { DynamicForm } from "../components/dynamic-form";
+import DynamicForm from "../components/dynamic-form.astro";
+import ContactInfo from "../components/contact-info.astro";
 import { rushConfig } from "../../rush.config";
 import { rush } from "@/lib/rush";
 
-const formId = rushConfig.locales!.pt_BR!.forms.contact;
+const formId = rushConfig.locales?.pt_BR?.forms?.contact ?? 0;
 let formSchema = null;
 let error = null;
 
@@ -18,30 +19,52 @@ try {
 ---
 
 <Layout title="Fale Conosco">
-    <section class="py-20 md:py-32 bg-gray-50">
-        <div class="max-w-2xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <span class="text-[#009640] font-semibold tracking-wide uppercase text-sm mb-2 block">
-                    Fale Conosco
-                </span>
-                <h1 class="text-3xl md:text-4xl font-bold text-[#009640] mb-4">
-                    Entre em Contato
-                </h1>
-                <p class="text-gray-600 text-lg">
-                    Estamos prontos para atender você. Preencha o formulário abaixo ou utilize nossos canais de atendimento.
-                </p>
-            </div>
+    <section class="py-20 md:py-32 bg-gray-50 relative overflow-hidden">
+        {/* Decorative Background Element */}
+        <div class="absolute top-0 left-0 w-full h-[500px] bg-linear-to-b from-[#009640]/5 to-transparent -z-10"></div>
 
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                {formSchema ? (
-                    <DynamicForm client:visible form={formSchema} />
-                ) : (
-                   <div class="text-center py-8 text-red-600 bg-red-50 rounded-lg">
-                        <p>Não foi possível carregar o formulário de contato.</p>
-                        <p class="text-sm mt-2 opacity-75">Tente novamente mais tarde.</p>
-                   </div>
-                )}
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+                {/* Left Column: Info & Text */}
+                <div class="space-y-8">
+                    <div>
+                        <span class="text-[#009640] font-bold tracking-wider uppercase text-sm mb-3 block opacity-80">
+                            Fale Conosco
+                        </span>
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-[#009640] mb-6 leading-tight">
+                            Vamos conversar?
+                        </h1>
+                        <p class="text-gray-600 text-lg leading-relaxed border-l-4 border-[#009640]/30 pl-6">
+                            <a href="https://wa.me/5512982942048" target="_blank" rel="noopener noreferrer" class="text-[#009640] font-bold hover:text-primary-dark transition-colors inline-flex items-center gap-1 group">
+                                Fale conosco agora via Whatsapp
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </a>
+                            <br class="hidden md:block"/>
+                            ou se preferir, preencha o formulário ao lado.
+                        </p>
+                    </div>
+
+                    <ContactInfo />
+                </div>
+
+                {/* Right Column: Dynamic Form */}
+                <div class="bg-white p-6 md:p-10 rounded-3xl shadow-xl shadow-[#009640]/5 border border-white relative">
+                     <div class="absolute inset-0 bg-linear-to-br from-white to-gray-50 rounded-3xl -z-10"></div>
+                     <h2 class="text-2xl font-bold text-gray-800 mb-6 lg:sr-only">Formulário de Contato</h2>
+                    {formSchema ? (
+                        <DynamicForm form={formSchema} />
+                    ) : (
+                       <div class="text-center py-12 px-6 text-red-600 bg-red-50/50 border border-red-100 rounded-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-red-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                            <p class="font-medium">Não foi possível carregar o formulário.</p>
+                            <p class="text-sm mt-2 opacity-75">Por favor, utilize o Whatsapp ou tente novamente mais tarde.</p>
+                       </div>
+                    )}
+                </div>
             </div>
         </div>
     </section>
 </Layout>
+
