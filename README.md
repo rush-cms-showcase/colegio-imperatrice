@@ -1,8 +1,8 @@
 # Colégio Imperatrice - Rush CMS Showcase
 
-Um projeto moderno e de alta performance desenvolvido com **Astro 5** e **React**, servindo como um caso de uso real (showcase) para o **Rush CMS**. Este projeto demonstra a capacidade do Rush CMS em gerenciar conteúdo dinâmico, menus e configurações de SEO para sites institucionais complexos.
+A high-performance, modern project built with **Astro 5** and **React**, serving as a real-world **Rush CMS** showcase. This project demonstrates Rush CMS's capabilities in managing dynamic content, menus, and SEO configurations for complex institutional websites.
 
-## 🚀 Tecnologias
+## 🚀 Technologies
 
 - **Framework**: [Astro v5](https://astro.build) (Server-side Rendering & Static Generation)
 - **CMS**: [Rush CMS](https://rushcms.com) (Headless CMS)
@@ -10,77 +10,77 @@ Um projeto moderno e de alta performance desenvolvido com **Astro 5** e **React*
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com)
 - **Icons**: Lucide React & Unplugin Icons
 
-## 🌟 Funcionalidades & Integração Rush CMS
+## 🌟 Features & Rush CMS Integration
 
-Este projeto utiliza o Rush CMS como única fonte de verdade para o conteúdo. Principais integrações:
+This project uses Rush CMS as the single source of truth for content. Key integrations include:
 
-### 1. Gestão de Conteúdo Dinâmico
-- **Eventos e Destaques**: Listagens paginadas (`/eventos`, `/destaques`) com imagens de capa, galerias e textos ricos.
-- **Blog**: Sistema de notícias completo com renderização de **Rich Text** (Tiptap JSON) transformado em HTML estático para máxima performance e SEO.
-- **Paginação**: Controle total de paginação (ex: 6 itens por página) configurado no front-end e alimentado pela API do Rush.
+### 1. Dynamic Content Management
+- **Events and Highlights**: Paginated listings (`/eventos`, `/destaques`) with cover images, galleries, and rich text.
+- **Blog**: Full-featured news system with **Rich Text** rendering (Tiptap JSON) transformed into static HTML for maximum performance and SEO.
+- **Pagination**: Full pagination control (e.g., 6 items per page) configured on the front-end and powered by the Rush API.
 
-### 2. Estrutura de Dados (`rush.config.ts`)
-O arquivo de configuração centraliza o mapeamento entre rotas e coleções do CMS:
-- **Mapas de Rotas**: Associa URLs (`/blog`, `/eventos`) aos IDs de coleção no Rush.
-- **Internacionalização**: Suporte configurado para `pt_BR`.
-- **IDs Dinâmicos**: Utiliza variáveis de ambiente para IDs de menus, formulários e categorias.
+### 2. Data Structure (`rush.config.ts`)
+The configuration file centralizes the mapping between routes and CMS collections:
+- **Route Maps**: Associates URLs (`/blog`, `/eventos`) with Rush collection IDs.
+- **Internationalization**: Support configured for `pt_BR`.
+- **Dynamic IDs**: Uses environment variables for menu, form, and category IDs.
 
-### 3. Componentes Otimizados
-- **Imagens**: Integração com `astro:assets` e imagens otimizadas vindas do CMS.
-- **Formulários**: Formulário de contato integrado diretamente com a API do Rush CMS (`src/lib/client/forms.ts`).
+### 3. Optimized Components
+- **Images**: Integration with `astro:assets` and optimized images served from the CMS.
+- **Forms**: Contact form integrated directly with the Rush CMS API (`src/lib/client/forms.ts`).
 
-## 🛠️ Instalação e Execução
+## 🛠️ Installation & Setup
 
-### Pré-requisitos
+### Prerequisites
 - Node.js 18+
-- PNPM (recomendado)
+- PNPM (recommended)
 
-### Passo a passo
+### Step-by-step
 
-1. **Clone o repositório**
+1. **Clone the repository**
    ```bash
    git clone https://github.com/rush-cms-showcase/colegio-imperatrice.git
    cd colegio-imperatrice
    ```
 
-2. **Instale as dependências**
+2. **Install dependencies**
    ```bash
    pnpm install
    ```
 
-3. **Configuração de Ambiente**
-   Crie um arquivo `.env` na raiz baseado no `.env.example` e preencha com suas credenciais do Rush CMS:
+3. **Environment Configuration**
+   Create a `.env` file in the root directory based on `.env.example` and fill in your Rush CMS credentials:
    ```env
    RUSH_BASE_URL=https://app.rushcms.com
-   RUSH_API_TOKEN=seu_token_aqui
+   RUSH_API_TOKEN=your_token_here
    RUSH_SITE_SLUG=colegio-imperatrice
-   # IDs de Menus e Rotas (consulte o painel do Rush CMS)
+   # Menu and Route IDs (check Rush CMS dashboard)
    PUBLIC_RUSH_ROUTE_BLOG_ID=...
    PUBLIC_RUSH_NAV_MAIN_ID=...
    ```
 
-4. **Inicie o servidor de desenvolvimento**
+4. **Start the development server**
    ```bash
    pnpm dev
    ```
-   Acesse `http://localhost:4321`
+   Access `http://localhost:4321`
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 
 ```text
 src/
-├── components/       # Componentes UI (React/Astro)
-│   ├── home/         # Seções da Home (Hero, Events, etc.)
-│   └── gallery/      # Galerias de imagens (Masonry)
-├── layouts/          # Layouts base (Header, Footer)
-├── lib/              # Cliente SDK do Rush CMS e utilitários
-├── pages/            # Roteamento baseado em arquivos
-│   ├── blog/         # Rotas dinâmicas de blog
-│   ├── destaques/    # Rotas de destaques
-│   └── eventos/      # Rotas de eventos
-└── utils/            # Utilitários gerais (ex: rich-text.ts)
+├── components/       # UI Components (React/Astro)
+│   ├── home/         # Home Sections (Hero, Events, etc.)
+│   └── gallery/      # Image galleries (Masonry)
+├── layouts/          # Base Layouts (Header, Footer)
+├── lib/              # Rush CMS SDK Client and utilities
+├── pages/            # File-based routing
+│   ├── blog/         # Dynamic blog routes
+│   ├── destaques/    # Highlight routes
+│   └── eventos/      # Event routes
+└── utils/            # General utilities (e.g., rich-text.ts)
 ```
 
-## 📄 Licença
+## 📄 License
 
-Este projeto é um showcase proprietário. Todos os direitos de conteúdo e design reservados ao Colégio Imperatrice. Código fonte disponível para fins educacionais e de demonstração do Rush CMS.
+This project is a proprietary showcase. All content and design rights reserved to Colégio Imperatrice. Source code available for educational and Rush CMS demonstration purposes.
