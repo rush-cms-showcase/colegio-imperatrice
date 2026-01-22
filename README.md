@@ -1,12 +1,12 @@
-# Colégio Imperatrice - Rush CMS Showcase
+# Colégio Imperatrice
 
-A high-performance, modern project built with **Astro 5** and **React**, serving as a real-world **Rush CMS** showcase. This project demonstrates Rush CMS's capabilities in managing dynamic content, menus, and SEO configurations for complex institutional websites.
+A high-performance, modern school website built with **Astro 5** and **React**, serving as a real-world **Rush CMS** showcase. This project demonstrates Rush CMS's capabilities in managing dynamic content, menus, and SEO configurations for complex institutional websites.
 
 ## 🚀 Technologies
 
 - **Framework**: [Astro v5](https://astro.build) (Server-side Rendering & Static Generation)
 - **CMS**: [Rush CMS](https://rushcms.com) (Headless CMS)
-- **UI Framework**: [React](https://react.dev)
+- **UI Framework**: [React](https://react.dev) (Used for islands like Contact Form)
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com)
 - **Icons**: Lucide React & Unplugin Icons
 
