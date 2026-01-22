@@ -1,5 +1,6 @@
 ---
 import { rush } from "@/lib/rush";
+import { Image } from "astro:assets";
 import { rushConfig } from "../../../rush.config";
 import FileText from '~icons/lucide/file-text';
 
@@ -21,14 +22,14 @@ if (posts.length === 0) return;
 <section class="w-full pb-16 lg:pb-32">
     <div class="container mx-auto px-4">
         <div class="flex justify-center lg:justify-between flex-col lg:flex-row items-center lg:items-end mb-8">
-            <h2 class="text-3xl lg:text-4xl font-bold text-primary text-[#009640]">
+            <h2 class="text-3xl lg:text-4xl font-bold text-[#00692d]">
                 Últimos Posts
             </h2>
             <div class="flex gap-4 items-center justify-center text-sm max-lg:mt-2">
                 <span class="text-gray-500 tracking-wider font-medium max-lg:hidden">
                     Clique ao lado para
                 </span>
-                <a href="/blog" class="uppercase bg-gray-200 px-4 py-2 rounded text-gray-600 font-bold hover:bg-gray-600 hover:text-white transition-colors">
+                <a href="/blog" aria-label="Ver todos os posts do blog" class="uppercase bg-gray-200 px-4 py-2 rounded text-gray-600 font-bold hover:bg-gray-600 hover:text-white transition-colors">
                     Ver Todos
                 </a>
             </div>
@@ -41,11 +42,14 @@ if (posts.length === 0) return;
                 return (
                     <div class="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow">
                         <a href={`/blog/${post.slug}`} class="block group">
-                            <div class="relative aspect-[4/3] rounded-xl overflow-hidden mb-4">
+                            <div class="relative aspect-4/3 rounded-xl overflow-hidden mb-4">
                                 {post.featured_image ? (
-                                    <img
+                                    <Image
                                         src={post.featured_image.url}
                                         alt={post.title}
+                                        width={600}
+                                        height={450}
+                                        format="webp"
                                         class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
                                     />
                                 ) : (
@@ -57,18 +61,18 @@ if (posts.length === 0) return;
 
                             {category && (
                                 <div class="flex items-center gap-2 mb-3">
-                                    <div class="w-2 h-2 rounded-full bg-[#009640]"></div>
-                                    <span class="text-xs font-bold text-[#009640] uppercase tracking-wide">
+                                    <div class="w-2 h-2 rounded-full bg-[#00692d]"></div>
+                                    <span class="text-xs font-bold text-[#00692d] uppercase tracking-wide">
                                         {category.title || category.name}
                                     </span>
                                 </div>
                             )}
 
-                            <h3 class="text-lg font-bold text-[#009640] mb-3 line-clamp-2 group-hover:text-[#007a33] transition-colors">
+                            <h3 class="text-lg font-bold text-[#00692d] mb-3 line-clamp-2 group-hover:text-primary-dark transition-colors">
                                 {post.title}
                             </h3>
 
-                            <span class="inline-block px-4 py-2 bg-[#009640] text-white text-xs font-bold rounded uppercase tracking-wider group-hover:bg-[#007a33] transition-colors">
+                            <span class="inline-block px-4 py-2 bg-[#00692d] text-white text-xs font-bold rounded uppercase tracking-wider group-hover:bg-primary-dark transition-colors">
                                 Ler Mais
                             </span>
                         </a>

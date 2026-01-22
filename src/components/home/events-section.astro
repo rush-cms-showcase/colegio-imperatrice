@@ -1,5 +1,6 @@
 ---
 import { rush, getCollectionId } from "@/lib/rush";
+import { Image } from "astro:assets";
 import Calendar from '~icons/lucide/calendar';
 
 const collectionId = getCollectionId('/eventos');
@@ -19,14 +20,14 @@ if (events.length === 0) return;
 <section class="w-full py-32 z-20">
     <div class="container mx-auto px-4">
         <div class="flex justify-center lg:justify-between flex-col lg:flex-row items-center lg:items-end mb-8">
-            <h2 class="text-3xl lg:text-4xl font-bold text-[#009640]">
+            <h2 class="text-3xl lg:text-4xl font-bold text-[#00692d]">
                 Últimos Eventos
             </h2>
             <div class="flex gap-4 items-center justify-center text-sm max-lg:mt-2">
                 <span class="text-gray-500 tracking-wider font-medium max-lg:hidden">
                     Clique ao lado para
                 </span>
-                <a href="/eventos" class="uppercase bg-gray-200 px-4 py-2 rounded text-gray-600 font-bold hover:bg-gray-600 hover:text-white transition-colors">
+                <a href="/eventos" aria-label="Ver todos os eventos" class="uppercase bg-gray-200 px-4 py-2 rounded text-gray-600 font-bold hover:bg-gray-600 hover:text-white transition-colors">
                     Ver Todos
                 </a>
             </div>
@@ -40,11 +41,14 @@ if (events.length === 0) return;
                 >
                     <div class="relative aspect-video rounded-2xl overflow-hidden mb-4 shadow-xl">
                         {event.featured_image ? (
-                            <img
-                                src={event.featured_image.url}
-                                alt={event.title}
-                                class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-                            />
+                                <Image
+                                    src={event.featured_image.url}
+                                    alt={event.title}
+                                    width={600}
+                                    height={338}
+                                    format="webp"
+                                    class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                                />
                         ) : (
                             <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
                                 <Calendar width="48" height="48" />
@@ -54,7 +58,7 @@ if (events.length === 0) return;
                             Veja o Evento
                         </div>
                     </div>
-                    <h3 class="text-xl font-bold text-[#009640] group-hover:text-primary-dark transition-colors">
+                    <h3 class="text-xl font-bold text-[#00692d] group-hover:text-primary-dark transition-colors">
                         {event.title}
                     </h3>
                 </a>
