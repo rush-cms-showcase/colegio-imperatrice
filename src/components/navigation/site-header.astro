@@ -1,17 +1,16 @@
 ---
-import Brand from '@/components/layout/brand.astro';
-import MenuList from '@/components/navigation/menu-list.astro';
-import Menu from '~icons/lucide/menu';
-import Close from '~icons/lucide/x';
-import type { NavItem } from '@/types/rush';
+import Brand from '@/components/layout/brand.astro'
+import MenuList from '@/components/navigation/menu-list.astro'
+import Menu from '~icons/lucide/menu'
+import Close from '~icons/lucide/x'
+import type { NavItem } from '@/types/rush'
 
 interface Props {
-  siteName: string;
-  items: NavItem[];
-  pathname: string;
+  siteName: string
+  items: NavItem[]
 }
 
-const { siteName, items, pathname } = Astro.props;
+const { siteName, items } = Astro.props
 ---
 
 <header id="site-header" class="border-b border-transparent bg-[#009640] shadow-md py-4">
@@ -40,27 +39,26 @@ const { siteName, items, pathname } = Astro.props;
 </header>
 
 <script>
-    const header = document.getElementById('site-header');
-    const btn = document.getElementById('mobile-menu-btn');
-    const menu = document.getElementById('mobile-menu');
-    const iconMenu = document.getElementById('icon-menu');
-    const iconClose = document.getElementById('icon-close');
-    let isOpen = false;
+    const btn = document.getElementById('mobile-menu-btn')
+    const menu = document.getElementById('mobile-menu')
+    const iconMenu = document.getElementById('icon-menu')
+    const iconClose = document.getElementById('icon-close')
+    let isOpen = false
 
     btn?.addEventListener('click', () => {
-        isOpen = !isOpen;
+        isOpen = !isOpen
         if (isOpen) {
-            menu?.classList.remove('hidden');
-            iconMenu?.classList.add('hidden');
-            iconClose?.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            btn.setAttribute('aria-label', 'Fechar menu');
+            menu?.classList.remove('hidden')
+            iconMenu?.classList.add('hidden')
+            iconClose?.classList.remove('hidden')
+            document.body.style.overflow = 'hidden'
+            btn.setAttribute('aria-label', 'Fechar menu')
         } else {
-            menu?.classList.add('hidden');
-            iconMenu?.classList.remove('hidden');
-            iconClose?.classList.add('hidden');
-            document.body.style.overflow = '';
-            btn.setAttribute('aria-label', 'Abrir menu');
+            menu?.classList.add('hidden')
+            iconMenu?.classList.remove('hidden')
+            iconClose?.classList.add('hidden')
+            document.body.style.overflow = ''
+            btn.setAttribute('aria-label', 'Abrir menu')
         }
-    });
+    })
 </script>

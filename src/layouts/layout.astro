@@ -1,16 +1,16 @@
 ---
-import Footer from '@/components/layout/footer.astro';
-import SiteHeader from '@/components/navigation/site-header.astro';
-import WhatsAppFloat from '@/components/layout/whatsapp-float.astro';
-import TopBar from '@/components/layout/top-bar.astro';
-import '@fontsource/poppins';
-import '@/styles/global.css';
+import Footer from '@/components/layout/footer.astro'
+import SiteHeader from '@/components/navigation/site-header.astro'
+import WhatsAppFloat from '@/components/layout/whatsapp-float.astro'
+import TopBar from '@/components/layout/top-bar.astro'
+import '@fontsource/poppins'
+import '@/styles/global.css'
 
-import { rush } from "@/lib/rush"
-import { rushConfig } from "../../rush.config"
-import type { NavItem } from "@/types/rush"
-import { mapMenuItem } from "@/lib/nav"
-import { CONTACT } from "@/constants/contact"
+import { rush } from '@/lib/rush'
+import { rushConfig } from '../../rush.config'
+import type { NavItem } from '@/types/rush'
+import { mapMenuItem } from '@/lib/nav'
+import { CONTACT } from '@/constants/contact'
 
 interface Props {
 	title: string
@@ -19,32 +19,31 @@ interface Props {
 	noindex?: boolean
 }
 
-const { title, description = "Colégio Imperatrice - Educação de qualidade com amor, carinho e dedicação. Metodologia COC, estrutura completa e equipe qualificada em Caraguatatuba-SP.", image = "/imperatrice-logo.png", noindex = false } = Astro.props
+const { title, description = 'Colégio Imperatrice - Educação de qualidade com amor, carinho e dedicação. Metodologia COC, estrutura completa e equipe qualificada em Caraguatatuba-SP.', image = '/imperatrice-logo.png', noindex = false } = Astro.props
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
-const pathname = Astro.url.pathname;
-const navs = rushConfig.locales[rushConfig.defaultLocale].navs;
-let topBarItems: NavItem[] = [];
-let mainMenuItems: NavItem[] = [];
+const navs = rushConfig.locales[rushConfig.defaultLocale].navs
+let topBarItems: NavItem[] = []
+let mainMenuItems: NavItem[] = []
 
 async function fetchMenu(menuId: string | undefined) {
-    if (!menuId) return [];
+    if (!menuId) return []
     try {
-        const menuResponse: any = await rush.getMenu(menuId);
-        let rawItems: any[] = [];
-        if (Array.isArray(menuResponse)) rawItems = menuResponse;
-        else if (Array.isArray(menuResponse.items)) rawItems = menuResponse.items;
-        else if (menuResponse.data && Array.isArray(menuResponse.data.items)) rawItems = menuResponse.data.items;
-        else if (menuResponse.data && Array.isArray(menuResponse.data)) rawItems = menuResponse.data;
+        const menuResponse: any = await rush.getMenu(menuId)
+        let rawItems: any[] = []
+        if (Array.isArray(menuResponse)) rawItems = menuResponse
+        else if (Array.isArray(menuResponse.items)) rawItems = menuResponse.items
+        else if (menuResponse.data && Array.isArray(menuResponse.data.items)) rawItems = menuResponse.data.items
+        else if (menuResponse.data && Array.isArray(menuResponse.data)) rawItems = menuResponse.data
         
-        return rawItems.map(item => mapMenuItem(item, 'pt_BR'));
+        return rawItems.map(item => mapMenuItem(item, 'pt_BR'))
     } catch (e) {
-        console.error(`Failed to fetch menu ${menuId}`, e);
-        return [];
+        console.error(`Failed to fetch menu ${menuId}`, e)
+        return []
     }
 }
 
-if (navs?.topbar) topBarItems = await fetchMenu(navs.topbar);
-if (navs?.main) mainMenuItems = await fetchMenu(navs.main);
+if (navs?.topbar) topBarItems = await fetchMenu(navs.topbar)
+if (navs?.main) mainMenuItems = await fetchMenu(navs.main)
 ---
 
 <!doctype html>
@@ -83,7 +82,7 @@ if (navs?.main) mainMenuItems = await fetchMenu(navs.main);
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={new URL(image, Astro.site)} />
 
-		<script type="application/ld+json" set:html={JSON.stringify({
+		<script is:inline type="application/ld+json" set:html={JSON.stringify({
 			"@context": "https://schema.org",
 			"@type": "EducationalOrganization",
 			"name": "Colégio Imperatrice",
@@ -108,7 +107,7 @@ if (navs?.main) mainMenuItems = await fetchMenu(navs.main);
 	</head>
 	<body class="bg-background text-gray-900 font-sans antialiased min-h-screen flex flex-col">
         <TopBar items={topBarItems} />
-        <SiteHeader siteName="Colégio Imperatrice" pathname={pathname} items={mainMenuItems} />
+        <SiteHeader siteName="Colégio Imperatrice" items={mainMenuItems} />
         
         <main class="flex-1">
 		    <slot />

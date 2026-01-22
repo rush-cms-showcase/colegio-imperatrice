@@ -1,20 +1,18 @@
 ---
-import Layout from "../layouts/layout.astro";
-import DynamicForm from "../components/dynamic-form.astro";
-import ContactInfo from "../components/contact-info.astro";
-import { rushConfig } from "../../rush.config";
-import { rush } from "@/lib/rush";
+import Layout from '../layouts/layout.astro'
+import DynamicForm from '../components/dynamic-form.astro'
+import ContactInfo from '../components/contact-info.astro'
+import { rushConfig } from '../../rush.config'
+import { rush } from '@/lib/rush'
 
-const formId = rushConfig.locales?.pt_BR?.forms?.contact ?? 0;
-let formSchema = null;
-let error = null;
+const formId = rushConfig.locales?.pt_BR?.forms?.contact ?? 0
+let formSchema = null
 
 try {
-    const response = await rush.request<any>(`/forms/${formId}`);
-    formSchema = response.data;
+    const response = await rush.request<any>(`/forms/${formId}`)
+    formSchema = response.data
 } catch (e) {
-    console.error('Failed to fetch contact form:', e);
-    error = e;
+    console.error('Failed to fetch contact form:', e)
 }
 ---
 

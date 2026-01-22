@@ -1,8 +1,8 @@
 ---
-import { Image } from 'astro:assets';
-import quoteIcon from '@/assets/images/quote.svg';
-import ChevronLeft from '~icons/lucide/chevron-left';
-import ChevronRight from '~icons/lucide/chevron-right';
+import { Image } from 'astro:assets'
+import quoteIcon from '@/assets/images/quote.svg'
+import ChevronLeft from '~icons/lucide/chevron-left'
+import ChevronRight from '~icons/lucide/chevron-right'
 
 const testimonials = [
     {
@@ -26,7 +26,7 @@ const testimonials = [
         role: 'Mãe de aluna da Educação Infantil',
         image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2600&auto=format&fit=crop'
     }
-];
+]
 ---
 
 <section class="relative w-full py-16 testimonials-section">
@@ -88,33 +88,33 @@ const testimonials = [
 </section>
 
 <script>
-    const section = document.querySelector('.testimonials-section');
+    const section = document.querySelector('.testimonials-section')
     if (section) {
-        const slides = section.querySelectorAll('.testimonial-slide');
-        const prevBtn = section.querySelector('#prev-btn');
-        const nextBtn = section.querySelector('#next-btn');
-        let currentIndex = 0;
-        const total = slides.length;
+        const slides = section.querySelectorAll('.testimonial-slide')
+        const prevBtn = section.querySelector('#prev-btn')
+        const nextBtn = section.querySelector('#next-btn')
+        let currentIndex = 0
+        const total = slides.length
 
-        function showSlide(index) {
+        function showSlide(index: number) {
             slides.forEach((slide, i) => {
                 if (i === index) {
-                    slide.classList.remove('opacity-0', 'z-0', 'pointer-events-none', 'absolute');
-                    slide.classList.add('opacity-100', 'z-10', 'relative');
+                    slide.classList.remove('opacity-0', 'z-0', 'pointer-events-none', 'absolute')
+                    slide.classList.add('opacity-100', 'z-10', 'relative')
                 } else {
-                    slide.classList.remove('opacity-100', 'z-10', 'relative');
-                    slide.classList.add('opacity-0', 'z-0', 'pointer-events-none', 'absolute');
+                    slide.classList.remove('opacity-100', 'z-10', 'relative')
+                    slide.classList.add('opacity-0', 'z-0', 'pointer-events-none', 'absolute')
                 }
-            });
-            currentIndex = index;
+            })
+            currentIndex = index
         }
 
         nextBtn?.addEventListener('click', () => {
-            showSlide((currentIndex + 1) % total);
-        });
+            showSlide((currentIndex + 1) % total)
+        })
 
         prevBtn?.addEventListener('click', () => {
-            showSlide((currentIndex - 1 + total) % total);
-        });
+            showSlide((currentIndex - 1 + total) % total)
+        })
     }
 </script>

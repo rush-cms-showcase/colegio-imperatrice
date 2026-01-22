@@ -1,36 +1,36 @@
 ---
 interface FormField {
-    type: string;
+    type: string
     data: {
         config: {
-            name: string;
-            label: string;
-            type?: string;
-            placeholder?: string;
-            default_value?: string;
-            hint?: string;
-        };
+            name: string
+            label: string
+            type?: string
+            placeholder?: string
+            default_value?: string
+            hint?: string
+        }
         validation?: {
-            is_required?: boolean;
-            minlength?: number;
-            maxlength?: number;
-        };
-    };
+            is_required?: boolean
+            minlength?: number
+            maxlength?: number
+        }
+    }
 }
 
 interface FormSchema {
-    id: number;
-    name: string;
-    key: string;
-    description?: string;
-    fields: FormField[];
+    id: number
+    name: string
+    key: string
+    description?: string
+    fields: FormField[]
 }
 
 interface Props {
-    form: FormSchema;
+    form: FormSchema
 }
 
-const { form } = Astro.props;
+const { form } = Astro.props
 ---
 
 <div id="dynamic-form-container">
@@ -51,7 +51,7 @@ const { form } = Astro.props;
     </div>
 
     <form id="rush-form" class="space-y-6" data-form-key={form.key}>
-        {form.fields.map((field, index) => {
+        {form.fields.map((field) => {
             const { config, validation } = field.data;
             const isRequired = validation?.is_required;
             const fieldType = field.type === 'textarea' ? 'textarea' : (config.type || 'text');
@@ -74,7 +74,7 @@ const { form } = Astro.props;
                         />
                     ) : (
                         <input
-                            type={fieldType === 'telephone' ? 'tel' : fieldType}
+                            type={fieldType as any}
                             id={config.name}
                             name={config.name}
                             required={isRequired}
