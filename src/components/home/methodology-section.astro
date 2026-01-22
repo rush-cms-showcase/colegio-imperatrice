@@ -1,8 +1,4 @@
 ---
-import { Image } from 'astro:assets'
-import tab1 from '@/assets/images/tab-01.webp'
-import tab2 from '@/assets/images/tab-02.webp'
-import tab3 from '@/assets/images/tab-03.webp'
 import Brain from '~icons/lucide/brain'
 import Heart from '~icons/lucide/heart'
 import Dumbbell from '~icons/lucide/dumbbell'
@@ -13,21 +9,21 @@ const tabs = [
         label: 'IDIOMAS',
         title: 'Programa Bilíngue e Espanhol',
         content: 'Aos alunos do Ensino Fundamental I e II, o PES English oferece um aprendizado bilíngue natural e imersivo, voltado ao desenvolvimento real da comunicação em inglês. Já o Espanhol da FTD traz uma proposta moderna, culturalmente rica e alinhada à formação de cidadãos globais.',
-        image: tab1
+        image: 'tab-001.webp',
     },
     {
         id: 'socioemocional',
         label: 'SOCIOEMOCIONAL',
         title: 'Escola da Inteligência',
         content: 'Presente semanalmente na grade do Ensino Fundamental I, o programa desenvolve habilidades essenciais, como autocontrole, empatia e resiliência. Desenvolvido por Augusto Cury, sua metodologia é fundamentada em teorias reconhecidas da psicologia e da educação, garantindo consistência pedagógica.',
-        image: tab2
+        image: 'tab-002.webp',
     },
     {
         id: 'extracurriculares',
         label: 'EXTRACURRICULARES',
         title: 'Esporte, Cultura e Desenvolvimento',
         content: 'Aulas de futebol, vôlei, basquete, dança, teatro e o clube de ciências, com vivências práticas no laboratório, são algumas das experiências oferecidas por nós para complementar o aprendizado e estimular as habilidades sociais, físicas e criativas. Também temos o judô, sendo o único incluso na grade horária para o Fundamental I.',
-        image: tab3
+        image: 'tab-003.webp',
     }
 ]
 
@@ -70,8 +66,8 @@ const tabIcons = [Brain, Heart, Dumbbell]
                     <div class="bg-[#00692d] rounded-2xl shadow-xl overflow-hidden lg:overflow-visible">
                         <div class="grid grid-cols-1 lg:grid-cols-5 items-center">
                             <div class="lg:col-span-2 relative lg:min-h-[400px] order-1 lg:order-2 lg:-mr-8 lg:my-8">
-                                <Image
-                                    src={tab.image}
+                                <img
+                                    src={`/${tab.image}`}
                                     alt={tab.title}
                                     class="tab-image w-full h-full object-cover rounded-none lg:rounded-2xl lg:shadow-2xl"
                                 />
