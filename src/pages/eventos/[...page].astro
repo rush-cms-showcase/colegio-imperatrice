@@ -10,10 +10,10 @@ export async function getStaticPaths({ paginate }: { paginate: Function }) {
         const collectionId = getCollectionId('/eventos')
         const response = await rush.getEntries(collectionId, { limit: 1000 })
         const items = (response as { data?: CmsEntry[] }).data || []
-        return paginate(items, { pageSize: rushConfig.defaults.perPage || 12 })
+        return paginate(items, { pageSize: 6 })
     } catch (e) {
         console.error('Failed to fetch eventos entries:', e)
-        return paginate([], { pageSize: rushConfig.defaults.perPage || 12 })
+        return paginate([], { pageSize: 6 })
     }
 }
 
