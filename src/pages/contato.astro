@@ -1,9 +1,20 @@
 ---
 import Layout from "../layouts/layout.astro";
-import { ContactForm } from "../components/contact-form";
+import { DynamicForm } from "../components/dynamic-form";
 import { rushConfig } from "../../rush.config";
+import { rush } from "@/lib/rush";
 
 const formId = rushConfig.locales!.pt_BR!.forms.contact;
+let formSchema = null;
+let error = null;
+
+try {
+    const response = await rush.request<any>(`/forms/${formId}`);
+    formSchema = response.data;
+} catch (e) {
+    console.error('Failed to fetch contact form:', e);
+    error = e;
+}
 ---
 
 <Layout title="Fale Conosco">
@@ -22,7 +33,14 @@ const formId = rushConfig.locales!.pt_BR!.forms.contact;
             </div>
 
             <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                <ContactForm client:visible formId={formId} />
+                {formSchema ? (
+                    <DynamicForm client:visible form={formSchema} />
+                ) : (
+                   <div class="text-center py-8 text-red-600 bg-red-50 rounded-lg">
+                        <p>Não foi possível carregar o formulário de contato.</p>
+                        <p class="text-sm mt-2 opacity-75">Tente novamente mais tarde.</p>
+                   </div>
+                )}
             </div>
         </div>
     </section>
