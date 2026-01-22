@@ -1,12 +1,14 @@
 // @ts-check
-import { defineConfig, passthroughImageService } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
-import Icons from 'unplugin-icons/vite';
+import { defineConfig, passthroughImageService } from 'astro/config'
+import tailwindcss from '@tailwindcss/vite'
+import Icons from 'unplugin-icons/vite'
+
+import sitemap from '@astrojs/sitemap'
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://colegioimperatrice.com.br',
-  integrations: [],
+  integrations: [sitemap()],
   image: {
     service: passthroughImageService(),
   },
@@ -18,4 +20,4 @@ export default defineConfig({
       tailwindcss(),
     ],
   }
-});
+})
