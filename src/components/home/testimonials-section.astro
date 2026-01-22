@@ -7,25 +7,58 @@ import ChevronRight from '~icons/lucide/chevron-right'
 const testimonials = [
     {
         id: 1,
-        text: 'Uma escola que acolhe e transforma. Ver o desenvolvimento do meu filho aqui é gratificante. A equipe é sensacional e o ambiente é muito seguro.',
-        author: 'Ana Clara Villa',
-        role: 'Mãe de aluno do Fundamental',
-        image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=2600&auto=format&fit=crop'
+        text: 'Eu estava em busca de algo que fosse o complemento da minha casa, um colégio que abraçasse como se fosse família e oferecesse conteúdo, e tudo que eu buscava encontrei aqui.',
+        author: 'Carolina Juvenal Simões',
+        role: 'Mãe de aluno o Ensino Médio',
     },
     {
         id: 2,
-        text: 'A metodologia de ensino é excelente, preparando os alunos para o futuro com valores sólidos. Sinto que fiz a melhor escolha para a educação da minha filha.',
-        author: 'Roberto Silva',
-        role: 'Pai de aluna do Ensino Médio',
-        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=2600&auto=format&fit=crop'
+        text: 'Eu sempre senti da parte do Colégio esse amparo familiar. Aqui eles sabem o nome delas, elas tem identidade no Colégio.',
+        author: 'Tatiana Gonçalves Nunes',
+        role: 'Mãe de alunas do Ensino Fundamental e Médio',
     },
     {
         id: 3,
-        text: 'O carinho que os professores têm com as crianças é o diferencial. Minha filha ama ir para a escola todos os dias!',
-        author: 'Mariana Santos',
-        role: 'Mãe de aluna da Educação Infantil',
-        image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2600&auto=format&fit=crop'
-    }
+        text: 'Eu gosto muito da proximidade dos alunos com os professores. Eles se sentem livres para falar e esclarecer as dúvidas, o que contrubui muito para a confiança neles mesmos.',
+        author: 'Romína Magdalena Garcia Lizana',
+        role: 'Mãe de alunos do Ensino Fundamental e Médio',
+    },
+    {
+        id: 4,
+        text: 'Aqui, a gente vê o cuidado com as diferenças, não só a intelectualidade. A escola valoriza o lado humano, isso para mim não tem preço e é por isso que eu gosto de trabalhar aqui.',
+        author: 'José Antonio Neto',
+        role: 'Professor de Biologia do Ensino Médio',
+    },
+    {
+        id: 5,
+        text: 'É uma escolha acolhedora, que abraça as causas, que tenta ouvir os alunos, os pais e os professores. Nós damos valor ao ser humano, ele não é apenas um número aqui.',
+        author: 'Bethânia Menezes de Paiva',
+        role: 'Professora Polivalente do Ensino Fundamental',
+    },
+    {
+        id: 6,
+        text: 'Essa foi a primeira escola que eu realmente gostei, foi onde eu me adaptei muito bem e que no primeiro dia eu já quis ficar.',
+        author: 'Melissa Gonçalves Nunes',
+        role: 'Aluna do Ensino Médio',
+    },
+    {
+        id: 7,
+        text: 'Todo mundo trabalha junto, você sempre terá alguém ali. Se você precisar de alguma coisa, você pode contar com a escola.',
+        author: 'Beatriz Albuquerque Hartmann Penna',
+        role: 'Aluna do Ensino Fundamental',
+    },
+    {
+        id: 8,
+        text: 'Eu costumo dizer que a melhor escola é aquela em que o nosso filho se sente bem e pra gente eles se sentem bem aqui.',
+        author: 'Priscila de Paiva Santos Pereira',
+        role: 'Mãe de alunos do Ensino Fundamental e Médio',
+    },
+    {
+        id: 9,
+        text: 'A escola está sempre de portas abertas para nós. Existe essa interação com os pais e famílias.',
+        author: 'Márcio Ricardo Jaime Pereira',
+        role: 'Pai de Alunos do Ensino Fundamental e Médio',
+    },
 ]
 ---
 
@@ -46,9 +79,6 @@ const testimonials = [
                     class={`testimonial-slide bg-white text-center flex items-center justify-center flex-col gap-4 lg:gap-6 rounded-xl p-8 lg:p-12 shadow-xl absolute top-0 left-0 w-full transition-opacity duration-500 ${index === 0 ? 'opacity-100 z-10 relative' : 'opacity-0 z-0 pointer-events-none'}`}
                     data-index={index}
                 >
-                     <div class="absolute -top-4 lg:top-8 left-8 w-12 lg:w-16 h-12 lg:h-16 z-20">
-                        <Image src={quoteIcon} alt="Citação" class="w-full h-full object-contain" />
-                    </div>
                     <div class="absolute -bottom-4 lg:bottom-8 right-8 w-12 lg:w-16 h-12 lg:h-16 z-20 rotate-180">
                         <Image src={quoteIcon} alt="Citação" class="w-full h-full object-contain" />
                     </div>

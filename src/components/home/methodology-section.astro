@@ -6,63 +6,30 @@ import tab3 from '@/assets/images/tab-03.webp'
 import Brain from '~icons/lucide/brain'
 import Heart from '~icons/lucide/heart'
 import Dumbbell from '~icons/lucide/dumbbell'
-import Lightbulb from '~icons/lucide/lightbulb'
-import BookOpen from '~icons/lucide/book-open'
-import Target from '~icons/lucide/target'
-import HandHeart from '~icons/lucide/hand-heart'
-import Users from '~icons/lucide/users'
-import Smile from '~icons/lucide/smile'
-import TreePine from '~icons/lucide/tree-pine'
-import Trophy from '~icons/lucide/trophy'
-import HeartPulse from '~icons/lucide/heart-pulse'
 
 const tabs = [
     {
-        id: 'intelecto',
-        label: 'INTELECTO',
-        title: 'Desenvolvimento Intelectual',
-        content: [
-            { text: 'Nossa metodologia foca no desenvolvimento cognitivo através de desafios estimulantes e aprendizado ativo.', icon: 'lightbulb' },
-            { text: 'Utilizamos material didático atualizado e tecnologias educacionais que despertam a curiosidade e o pensamento crítico.', icon: 'book' },
-            { text: 'O aluno é protagonista do seu aprendizado, construindo conhecimento de forma significativa.', icon: 'target' }
-        ],
+        id: 'idiomas',
+        label: 'IDIOMAS',
+        title: 'Programa Bilíngue e Espanhol',
+        content: 'Aos alunos do Ensino Fundamental I e II, o PES English oferece um aprendizado bilíngue natural e imersivo, voltado ao desenvolvimento real da comunicação em inglês. Já o Espanhol da FTD traz uma proposta moderna, culturalmente rica e alinhada à formação de cidadãos globais.',
         image: tab1
     },
     {
-        id: 'psicologico',
-        label: 'PSICOLÓGICO',
-        title: 'Apoio Psicológico',
-        content: [
-            { text: 'Valorizamos a saúde mental e o bem-estar emocional de nossos alunos.', icon: 'handheart' },
-            { text: 'Contamos com suporte psicopedagógico para auxiliar no desenvolvimento das competências socioemocionais.', icon: 'users' },
-            { text: 'Ambiente acolhedor que promove a autoestima, a empatia e o respeito às diferenças.', icon: 'smile' }
-        ],
+        id: 'socioemocional',
+        label: 'SOCIOEMOCIONAL',
+        title: 'Escola da Inteligência',
+        content: 'Presente semanalmente na grade do Ensino Fundamental I, o programa desenvolve habilidades essenciais, como autocontrole, empatia e resiliência. Desenvolvido por Augusto Cury, sua metodologia é fundamentada em teorias reconhecidas da psicologia e da educação, garantindo consistência pedagógica.',
         image: tab2
     },
     {
-        id: 'fisico',
-        label: 'FÍSICO',
-        title: 'Desenvolvimento Físico',
-        content: [
-            { text: 'Incentivamos a prática de atividades físicas como parte fundamental da formação.', icon: 'treepine' },
-            { text: 'Ampla área verde e quadras poliesportivas para recreação e esportes.', icon: 'trophy' },
-            { text: 'Aulas de educação física que trabalham a coordenação motora, o trabalho em equipe e hábitos saudáveis.', icon: 'heartpulse' }
-        ],
+        id: 'extracurriculares',
+        label: 'EXTRACURRICULARES',
+        title: 'Esporte, Cultura e Desenvolvimento',
+        content: 'Aulas de futebol, vôlei, basquete, dança, teatro e o clube de ciências, com vivências práticas no laboratório, são algumas das experiências oferecidas por nós para complementar o aprendizado e estimular as habilidades sociais, físicas e criativas. Também temos o judô, sendo o único incluso na grade horária para o Fundamental I.',
         image: tab3
     }
 ]
-
-const iconMap: Record<string, any> = {
-    lightbulb: Lightbulb,
-    book: BookOpen,
-    target: Target,
-    handheart: HandHeart,
-    users: Users,
-    smile: Smile,
-    treepine: TreePine,
-    trophy: Trophy,
-    heartpulse: HeartPulse
-}
 
 const tabIcons = [Brain, Heart, Dumbbell]
 ---
@@ -111,24 +78,12 @@ const tabIcons = [Brain, Heart, Dumbbell]
                             </div>
 
                             <div class="lg:col-span-3 px-6 pt-4 pb-6 lg:p-12 text-white order-2 lg:order-1">
-                                <h3 class="text-2xl lg:text-4xl font-bold mb-6 leading-tight">
+                                <h3 class="text-3xl lg:text-5xl font-bold mb-6 leading-tight">
                                     {tab.title}
                                 </h3>
-                                <div class="space-y-4">
-                                    {tab.content.map((item) => {
-                                        const ItemIcon = iconMap[item.icon]
-                                        return (
-                                            <div class="flex gap-4 p-4 bg-white/10 backdrop-blur-sm rounded-xl">
-                                                <div class="shrink-0 w-10 h-10 bg-[#FFD000] rounded-lg flex items-center justify-center">
-                                                    <ItemIcon width="20" height="20" class="text-[#004e21]" />
-                                                </div>
-                                                <p class="text-white/90 text-sm lg:text-base leading-relaxed">
-                                                    {item.text}
-                                                </p>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
+                                <p class="text-white/90 text-base lg:text-lg leading-relaxed">
+                                    {tab.content}
+                                </p>
                             </div>
                         </div>
                     </div>
