@@ -6,7 +6,7 @@ const collectionId = getCollectionId('/eventos');
 let events = [];
 
 try {
-    const response = await rush.getEntries(collectionId, { perPage: 4 })
+    const response = await rush.getEntries(collectionId, { per_page: 2 })
     // @ts-ignore
     events = response.data || [];
 } catch (e) {
