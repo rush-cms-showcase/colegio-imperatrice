@@ -21,6 +21,7 @@ interface Props {
 
 const { title, description = 'Colégio Imperatrice - Educação de qualidade com amor, carinho e dedicação. Metodologia COC, estrutura completa e equipe qualificada em Caraguatatuba-SP.', image = '/imperatrice-logo.png', noindex = false } = Astro.props
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const gtagAds = import.meta.env.GTAG_ADS
 const navs = rushConfig.locales[rushConfig.defaultLocale].navs
 let topBarItems: NavItem[] = []
 let mainMenuItems: NavItem[] = []
@@ -81,6 +82,18 @@ if (navs?.main) mainMenuItems = await fetchMenu(navs.main)
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={new URL(image, Astro.site)} />
+
+		{gtagAds && (
+			<>
+				<script async src={`https://www.googletagmanager.com/gtag/js?id=${gtagAds}`} />
+				<script is:inline define:vars={{ gtagAds }}>
+					window.dataLayer = window.dataLayer || []
+					function gtag(){dataLayer.push(arguments)}
+					gtag('js', new Date())
+					gtag('config', gtagAds)
+				</script>
+			</>
+		)}
 
 		<script is:inline type="application/ld+json" set:html={JSON.stringify({
 			"@context": "https://schema.org",
