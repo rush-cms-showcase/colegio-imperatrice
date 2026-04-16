@@ -1,6 +1,5 @@
 ---
 import { rush } from "@/lib/rush";
-import { Image } from "astro:assets";
 import { rushConfig } from "../../../rush.config";
 import FileText from '~icons/lucide/file-text';
 
@@ -44,12 +43,9 @@ if (posts.length === 0) return;
                         <a href={`/blog/${post.slug}`} class="block group">
                             <div class="relative aspect-4/3 rounded-xl overflow-hidden mb-4">
                                 {post.featured_image ? (
-                                    <Image
+                                    <img
                                         src={post.featured_image.url}
                                         alt={post.title}
-                                        width={600}
-                                        height={450}
-                                        format="webp"
                                         class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
                                     />
                                 ) : (
