@@ -1,0 +1,56 @@
+---
+import Layout from '@/layouts/layout.astro'
+import SectionTitle from '@/components/ui/section-title.astro'
+import AprovaCard from '@/components/aprova-card.astro'
+import Pagination from '@/components/pagination.astro'
+import { rush } from "@/lib/rush"
+import type { CmsEntry } from '@/types/rush'
+
+export async function getStaticPaths({ paginate }: { paginate: Function }) {
+    try {
+        const response = await rush.getEntries('aprova', { limit: 1000 })
+        const items = (response as { data?: CmsEntry[] }).data || []
+        return paginate(items, { pageSize: 12 })
+    } catch (e) {
+        console.error('Failed to fetch aprova entries for pagination:', e)
+        return paginate([], { pageSize: 12 })
+    }
+}
+
+const { page } = Astro.props as { page: { currentPage: number; lastPage: number; data: CmsEntry[]; url: { prev?: string; next?: string } } }
+const pageTitle = page.currentPage > 1 ? `Nossos alunos Aprova - Página ${page.currentPage}` : 'Nossos alunos Aprova'
+const pageDescription = "Cada aprovação é resultado de dedicação, esforço e muito apoio da nossa equipe."
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+    <div class="container mx-auto px-4 py-16 md:py-24">
+        <SectionTitle 
+            title="Nossos alunos Aprova" 
+            subtitle="Cada aprovação é resultado de dedicação, esforço e muito apoio da nossa equipe." 
+            badge="Orgulho Imperatrice" 
+        />
+
+        {page.data.length === 0 ? (
+            <div class="text-center py-20 bg-gray-50 rounded-xl border-dashed border-2 border-gray-200">
+                <p class="text-gray-500 text-lg">Nenhuma aprovação encontrada no momento.</p>
+            </div>
+        ) : (
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {page.data.map((item: any) => (
+                    <AprovaCard item={item} />
+                ))}
+            </div>
+        )}
+
+        {page.lastPage > 1 && (
+            <div class="mt-12">
+                <Pagination
+                    currentPage={page.currentPage}
+                    lastPage={page.lastPage}
+                    prevUrl={page.url.prev}
+                    nextUrl={page.url.next}
+                />
+            </div>
+        )}
+    </div>
+</Layout>
