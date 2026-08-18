@@ -1,0 +1,39 @@
+---
+import SectionTitle from '@/components/ui/section-title.astro'
+import AprovaCard from '@/components/aprova-card.astro'
+import { rush } from "@/lib/rush"
+import type { CmsEntry } from '@/types/rush'
+
+let items: CmsEntry[] = []
+
+try {
+    const response = await rush.getEntries('aprova', { limit: 3 })
+    items = (response as { data?: CmsEntry[] }).data || []
+} catch (e) {
+    console.error('Failed to fetch aprova entries for home:', e)
+}
+---
+
+{items.length > 0 && (
+    <section class="w-full py-16 md:py-24 bg-background">
+        <div class="container mx-auto px-4">
+            <SectionTitle 
+                title="Nossos alunos Aprova" 
+                subtitle="Cada aprovação é resultado de dedicação, esforço e muito apoio da nossa equipe." 
+                badge="Orgulho Imperatrice" 
+            />
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {items.map((item: any) => (
+                    <AprovaCard item={item} />
+                ))}
+            </div>
+            
+            <div class="mt-12 text-center">
+                <a href="/aprova" class="inline-flex items-center justify-center gap-2 bg-primary/10 text-primary hover:bg-primary hover:text-white font-bold py-3 px-8 rounded-full transition-colors duration-300">
+                    Ver todos os aprovados
+                </a>
+            </div>
+        </div>
+    </section>
+)}
