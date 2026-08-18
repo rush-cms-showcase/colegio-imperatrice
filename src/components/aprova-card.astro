@@ -1,0 +1,51 @@
+---
+import type { CmsEntry } from '@/types/rush'
+import IconGraduationCap from '~icons/lucide/graduation-cap'
+import IconMapPin from '~icons/lucide/map-pin'
+import IconArrowRight from '~icons/lucide/arrow-right'
+
+interface Props {
+    item: CmsEntry
+}
+
+const { item } = Astro.props;
+---
+
+<div class="bg-primary-dark rounded-[2rem] p-8 flex flex-col items-center text-center relative overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+    <div class="bg-primary-light text-secondary text-xs font-black px-4 py-1.5 rounded-full mb-6 inline-flex items-center gap-2 uppercase tracking-wide shadow-sm">
+        <IconGraduationCap class="h-4 w-4" />
+        Aprovado
+    </div>
+
+    {item.featured_image ? (
+        <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-primary/50 mb-6 shadow-md shrink-0">
+            <img src={item.featured_image.url} alt={item.title} class="w-full h-full object-cover" />
+        </div>
+    ) : (
+        <div class="w-32 h-32 rounded-full bg-primary/50 border-4 border-primary/50 mb-6 flex items-center justify-center text-white/50 shrink-0">
+            <IconGraduationCap class="h-12 w-12" />
+        </div>
+    )}
+
+    <h3 class="text-white text-xl font-bold mb-2 leading-tight">
+        {item.title}
+    </h3>
+
+    <div class="text-primary-light flex items-center justify-center gap-1.5 text-sm font-semibold mb-2">
+        <IconMapPin class="h-4 w-4" />
+        {item.data?.place}
+    </div>
+
+    <div class="text-white/80 font-semibold mb-1">
+        {item.data?.course}
+    </div>
+
+    <div class="text-white/60 text-sm font-medium mb-8">
+        {item.data?.line}
+    </div>
+
+    <a href={`/aprova/${item.slug}`} class="mt-auto px-6 py-2.5 rounded-full bg-primary hover:bg-primary-light text-white text-sm font-bold border border-primary-light transition-colors flex items-center gap-2">
+        Ver perfil
+        <IconArrowRight class="h-4 w-4" />
+    </a>
+</div>
