@@ -1,0 +1,73 @@
+---
+import type { CmsEntry } from '@/types/rush'
+import IconStar from '~icons/lucide/star'
+import IconTrophy from '~icons/lucide/trophy'
+import IconWaves from '~icons/lucide/waves'
+import IconBookOpen from '~icons/lucide/book-open'
+import IconFlaskConical from '~icons/lucide/flask-conical'
+import IconAward from '~icons/lucide/award'
+import IconArrowRight from '~icons/lucide/arrow-right'
+
+interface Props {
+    item: CmsEntry
+}
+
+const { item } = Astro.props;
+
+// Get initials (up to 2 characters) from the title
+const initials = item.title
+    .split(' ')
+    .filter(w => w.length > 2)
+    .slice(0, 2)
+    .map(w => w[0])
+    .join('')
+    .toUpperCase() || item.title.substring(0, 2).toUpperCase();
+
+const activityStr = (item.data?.activity || '').toLowerCase();
+
+let ActivityIcon = IconAward;
+if (activityStr.includes('nata') || activityStr.includes('surf')) {
+    ActivityIcon = IconWaves;
+} else if (activityStr.includes('ciência') || activityStr.includes('química') || activityStr.includes('física')) {
+    ActivityIcon = IconFlaskConical;
+} else if (activityStr.includes('matemática') || activityStr.includes('história')) {
+    ActivityIcon = IconBookOpen;
+} else if (activityStr.includes('judô') || activityStr.includes('jiu') || activityStr.includes('kart')) {
+    ActivityIcon = IconTrophy;
+}
+---
+
+<div class="bg-primary-dark rounded-[2rem] p-8 flex flex-col items-center text-center relative overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+    <div class="bg-[#639d2c] text-secondary text-[10px] font-black px-4 py-1.5 rounded-full mb-8 inline-flex items-center gap-1.5 uppercase tracking-wider shadow-sm">
+        <IconStar class="h-3 w-3 fill-current" />
+        Destaque
+    </div>
+
+    {item.featured_image ? (
+        <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-white/20 mb-6 shadow-md shrink-0">
+            <img src={item.featured_image.url} alt={item.title} class="w-full h-full object-cover" />
+        </div>
+    ) : (
+        <div class="w-32 h-32 rounded-full bg-white/10 border-2 border-white/30 mb-6 flex items-center justify-center text-white text-3xl font-black shrink-0">
+            {initials}
+        </div>
+    )}
+
+    <h3 class="text-white text-xl font-bold mb-2 leading-tight">
+        {item.title}
+    </h3>
+
+    {item.data?.activity && (
+        <div class="text-white/80 flex items-center justify-center gap-2 text-sm font-medium mb-8">
+            <ActivityIcon class="h-4 w-4" />
+            {item.data.activity}
+        </div>
+    )}
+    
+    {!item.data?.activity && <div class="mb-8" />}
+
+    <a href={`/destaques/${item.slug}`} class="mt-auto px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-bold transition-colors flex items-center gap-2 border border-white/10">
+        Ver perfil
+        <IconArrowRight class="h-4 w-4" />
+    </a>
+</div>
