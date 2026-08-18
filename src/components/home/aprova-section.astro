@@ -7,8 +7,8 @@ import type { CmsEntry } from '@/types/rush'
 let items: CmsEntry[] = []
 
 try {
-    const response = await rush.getEntries('aprova', { limit: 3 })
-    items = (response as { data?: CmsEntry[] }).data || []
+    const response = await rush.getEntries('aprova', { limit: 3, per_page: 3 })
+    items = ((response as { data?: CmsEntry[] }).data || []).slice(0, 3)
 } catch (e) {
     console.error('Failed to fetch aprova entries for home:', e)
 }
